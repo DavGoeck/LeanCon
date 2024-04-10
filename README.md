@@ -1,0 +1,2 @@
+# LeanCon
+Dein digitaler Bauleiter
