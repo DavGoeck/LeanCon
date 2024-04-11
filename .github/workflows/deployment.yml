@@ -1,0 +1,23 @@
+name: LeanCon Deployment CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - run: echo 'Auf gehts!'
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 18
+    - run: |
+        npm i -D turbo
+        npm i --workspace api @nestjs/serve-static
+        npm run build
+        pm2 stop 0
+        pm2 start 0
+        pm2 save
+        
