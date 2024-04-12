@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
 import './Page.css'
-import Footer from './common/Footer';
-import Header from './common/Header';
-import Sidebar from './common/Sidebar';
+import Footer from './Footer';
+import Header from './Header';
+import Sidebar from './Sidebar';
 
 interface PageProps {
     content: ReactElement
@@ -16,7 +16,7 @@ const Page = (props: PageProps) => {
                 <Header />
                 <div className="main">
                     <Sidebar />
-                    <div>
+                    <div className="content">
                         { content }
                     </div>
                 </div>

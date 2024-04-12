@@ -4,6 +4,7 @@
 
 #page-container {
     position: relative;
+    width: 100vw;
     min-height: 100vh;
 }
 
@@ -13,6 +14,10 @@
 
 .main {
     display: flex;
+}
+
+.main .content {
+    flex-grow: 5;
 }
 
 #footer {

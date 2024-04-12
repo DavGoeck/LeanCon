@@ -1,35 +1,37 @@
-import { useEffect, useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage';
-import Page from './pages/Page';
+import ProjectPage from './pages/ProjectPage';
+import HomePage from './pages/HomePage';
+import TimelinePage from './pages/TimelinePage';
+import ServicesPage from './pages/ServicesPage';
+import ContractorsPage from './pages/ContractorsPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DashboardPage/>,
+    element: <HomePage/>,
     errorElement: <ErrorPage />
+  },
+  {
+    path: 'projekte',
+    element: <ProjectPage />
+  },
+  {
+    path: 'zeitplan',
+    element: <TimelinePage />
+  },
+  {
+    path: 'leistungsverzeichnis',
+    element: <ServicesPage />
+  },
+  {
+    path: 'gewerke',
+    element: <ContractorsPage />
   }
 ])
 
-function App() {
+const App = () => {
   return <RouterProvider router={router}/>
-}
-
-function DashboardPage() {
-
-  return (
-    <Page content={<Home/>}/>
-  )
-}
-
-function Home() {
-  const [greeting, setGreeting] = useState('')
-
-  useEffect(() => {
-    fetch('/api').then(res => res.text()).then(setGreeting);
-  }, []);
-
-  return <h1>{greeting}</h1>
 }
 
 export default App

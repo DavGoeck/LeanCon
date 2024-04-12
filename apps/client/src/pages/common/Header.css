@@ -1,0 +1,15 @@
+:root {
+    --header-height: 36px
+}
+
+#header, #footer {
+    background-color: grey;
+    color: rgba(0,0,0,0.75);
+
+    padding: 4px;
+
+    font-size: small;
+    font-weight: bold;
+    
+    height: var(--header-height);
+}
