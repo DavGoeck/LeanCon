@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css'
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage/>
-  },
-  {
-    path: "*",
-    element: <NotFound />
+    element: <HomePage/>,
+    errorElement: <ErrorPage />
   }
 ])
 
@@ -29,10 +27,6 @@ function HomePage() {
       <h1>{greeting}</h1>
     </>
   )
-}
-
-function NotFound() {
-  return <div>404 Not Found</div>;
 }
 
 export default App
