@@ -1,5 +1,5 @@
 #sidebar {
-    flex-grow: 1
+    width: fit-content
 }
 
 #sidebar div {

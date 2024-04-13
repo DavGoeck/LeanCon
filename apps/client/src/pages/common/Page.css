@@ -17,7 +17,8 @@
 }
 
 .main .content {
-    flex-grow: 5;
+    padding: 8px 16px;
+    flex-grow: 1;
 }
 
 #footer {
