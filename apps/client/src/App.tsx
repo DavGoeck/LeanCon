@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage';
-import ProjectPage from './pages/ProjectPage';
+import ProjectsPage from './pages/ProjectPage';
 import HomePage from './pages/HomePage';
 import TimelinePage from './pages/TimelinePage';
 import ServicesPage from './pages/ServicesPage';
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'projekte',
-    element: <ProjectPage />
+    element: <ProjectsPage />
   },
   {
     path: 'zeitplan',
