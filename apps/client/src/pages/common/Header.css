@@ -3,6 +3,8 @@
 }
 
 #header, #footer {
+    display: flex;
+
     background-color: grey;
     color: rgba(0,0,0,0.75);
 
@@ -12,4 +14,12 @@
     font-weight: bold;
     
     height: var(--header-height);
+}
+
+#header a {
+    display: block;
+    height: 100%;
+
+    color: inherit;
+    font-size: 18px;
 }
