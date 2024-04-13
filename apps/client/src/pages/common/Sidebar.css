@@ -1,16 +1,18 @@
 #sidebar {
-    width: fit-content
+    width: fit-content;
+    background-color: rgb(243, 244, 246);
+    border-right: 1px solid grey;
 }
 
-#sidebar div {
+#sidebar a {
+    display: block;
+    width: 100%;
     padding: 4px 8px;
-}
 
-#sidebar div:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-#sidebar div a {
-    text-decoration: none;
     color: rgba(0,0,0,0.75);
+    text-decoration: none;
+}
+
+#sidebar a:hover {
+    background-color: rgba(0, 0, 0, 0.2);
 }

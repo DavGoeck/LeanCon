@@ -3,18 +3,10 @@ import './Sidebar.css'
 
 const Sidebar = () => (
     <div id="sidebar">
-        <div>
-            <NavLink to="/projekte">Projekte</NavLink>
-        </div>
-        <div>
-            <NavLink to="/zeitplan">Zeitplan</NavLink>
-        </div>
-        <div>
-            <NavLink to="/leistungsverzeichnis">Leistungsverzeichnis</NavLink>
-        </div>
-        <div>
-            <NavLink to="/gewerke">Gewerke</NavLink>
-        </div>
+        <NavLink to="/projekte">Projekte</NavLink>
+        <NavLink to="/zeitplan">Zeitplan</NavLink>
+        <NavLink to="/leistungsverzeichnis">Leistungsverzeichnis</NavLink>
+        <NavLink to="/gewerke">Gewerke</NavLink>
     </div>
 )
 
