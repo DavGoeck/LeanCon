@@ -4,10 +4,11 @@ import Page from './pages/common/Page';
 import Projects from './components/projects/Projects';
 import Timeline from './pages/Timeline';
 import Services from './pages/Services';
-import Contractors from './pages/Contractors';
+import Contractors from './components/contractors/Contractors';
 import Dashboard from './pages/Dashboard';
 import ProjectCreator from './components/projects/ProjectCreator';
 import AppContext from './context/AppContext';
+import ContractorCreator from './components/contractors/ContractorCreator';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: 'gewerke',
         element: <Contractors />
+      },
+      {
+        path: 'gewerke/neu',
+        element: <ContractorCreator />
       }
     ]
   }

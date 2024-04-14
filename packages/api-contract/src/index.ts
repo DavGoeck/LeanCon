@@ -8,7 +8,14 @@ export const ProjectSchema = z.object({
     title: z.string()
 })
 
+export const ContractorSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    projectId: z.string()
+})
+
 export type Project = z.infer<typeof ProjectSchema>
+export type Contractors = z.infer<typeof ContractorSchema>
 
 export const apiContract = c.router(
     {
@@ -70,6 +77,35 @@ export const apiContract = c.router(
                     404: z.object({
                         message: z.string()
                     })
+                }
+            }
+        },
+        contractors: {
+            getAll: {
+                method: 'GET',
+                path: '/contractors',
+                query: z.object({
+                    projectId: z.string()
+                }),
+                responses: {
+                    200: ContractorSchema.array()
+                }
+            },
+            create: {
+                method: 'POST',
+                path: '/contractors',
+                body: ContractorSchema.omit({ id: true }),
+                responses: {
+                    201: ContractorSchema
+                }
+            },
+            remove: {
+                method: 'DELETE',
+                path: '/contractors/:id',
+                body: z.any(),
+                responses: {
+                    204: z.object({}),
+                    404: z.object({})
                 }
             }
         }

@@ -2,15 +2,12 @@ import ProjectList from './ProjectList'
 import './Projects.css'
 import { Link } from 'react-router-dom'
 
-const Projects = () => {
-
-    return (
-        <div id="projects">
-            <ProjectHeadline />
-            <ProjectList />
-        </div>
-    )
-}
+const Projects = () => (
+    <div id="projects">
+        <ProjectHeadline />
+        <ProjectList />
+    </div>
+)
 
 const ProjectHeadline = () => {
     return (
