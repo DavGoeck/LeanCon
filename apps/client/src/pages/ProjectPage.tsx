@@ -1,56 +1,61 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Page from './common/Page'
-import API from '../api/project'
-
-interface Project {
-    id: string,
-    title: string
-}
+import API from '../api-client'
+//import { useQueryClient } from '@tanstack/react-query'
 
 const ProjectsPage = () => {
     return <Page content={<Projects/>}/>
 }
 
+type Project = {
+    id: string,
+    title: string
+}
+
 const Projects = () => {
-    const [projects, setProjects] = useState<Project[]>([])
+    //const queryClient = useQueryClient();
+    
+    /*const { data } = API.projects.getAll.useQuery(['projects'])
+    const projects: Project[] = data?.body || []
 
-    useEffect(() => {
-        const loadProjects = async () => {
-            const loadedProjects = await API.retrieveProjects()
-            setProjects(loadedProjects)
+    const { mutate: deletion } = API.projects.remove.useMutation({
+        onSuccess: () => {
+            //queryClient.invalidateQueries({ queryKey: ['projects'] })
         }
-        loadProjects()
-    }, [])
+    })
 
-    const deleteProject = (title: string) => {
-        return async () => {
-            const currentProjects = await API.deleteProject(title);
-            setProjects(currentProjects);
+    const { mutate: creation } = API.projects.create.useMutation({
+        onSuccess: () => {
+            //queryClient.invalidateQueries({ queryKey: ['projects'] })
+        }
+    })*/
+
+    const deleteProject = (id: string) => {
+        return () => {
+            //deletion({ params: { id } , body: {}})
         }
     }
 
-    const createProject = async (title: string) => {
-        const currentProjects = await API.createProject(title)
-        setProjects(currentProjects)
+    const createProject = (title: string) => {
+        //creation({ body: { title } })
     }
 
     return (
-        <>
+        <div>
             <h1>Projekte</h1>
-            <div>
-                <ProjectList projects={projects} onDelete={deleteProject}/>
-                <ProjectCreator onCreate={createProject} />
-            </div>
-        </>
+            <ProjectList projects={[]} onDelete={deleteProject}/>
+            <ProjectCreator onCreate={createProject} />
+        </div>
     )
 }
 
 interface ProjectListProps {
-    projects: Project[],
+    projects: {id: string, title: string}[] | undefined,
     onDelete: (id: string) => (() => void)
 }
 
 const ProjectList = (props: ProjectListProps) => {
+    const { projects, onDelete } = props;
 
     const projectRowStyle = {
         marginBottom: 8
@@ -67,8 +72,9 @@ const ProjectList = (props: ProjectListProps) => {
         borderRadius: 2,
         cursor: 'pointer'
     }
-    
-    const { projects, onDelete } = props;
+
+    if(!projects) return <></>
+
     const projectList = projects.map(project => {
         const { id, title } = project;
         return (
