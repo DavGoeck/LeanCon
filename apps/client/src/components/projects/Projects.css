@@ -1,0 +1,15 @@
+.project-row {
+    margin-bottom: 8px;
+}
+
+.project-row .project-title {
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.project-row .project-delete {
+    background-color: orange;
+    padding: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+}
