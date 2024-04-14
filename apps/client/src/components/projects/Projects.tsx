@@ -1,6 +1,4 @@
 import ProjectList from './ProjectList'
-import ProjectCreator from './ProjectCreator'
-
 import './Projects.css'
 import { Link } from 'react-router-dom'
 
@@ -10,7 +8,6 @@ const Projects = () => {
         <div id="projects">
             <ProjectHeadline />
             <ProjectList />
-            <ProjectCreator />
         </div>
     )
 }

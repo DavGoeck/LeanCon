@@ -6,6 +6,7 @@ import Timeline from './pages/Timeline';
 import Services from './pages/Services';
 import Contractors from './pages/Contractors';
 import Dashboard from './pages/Dashboard';
+import ProjectCreator from './components/projects/ProjectCreator';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'projekte',
         element: <Projects />
+      },
+      {
+        path: 'projekte/neu',
+        element: <ProjectCreator />
       },
       {
         path: 'zeitplan',

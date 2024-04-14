@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import API from '../../api-client'
 import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 const ProjectCreator = () => {
+    const navigate = useNavigate()
     const queryClient = useQueryClient();
 
     const { mutate: creation } = API.projects.create.useMutation({
@@ -13,6 +15,7 @@ const ProjectCreator = () => {
 
     const createProject = (title: string) => {
         creation({ body: { title } })
+        navigate('/projekte')
     }
 
     const [title, setTitle] = useState('')

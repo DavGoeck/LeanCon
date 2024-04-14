@@ -13,3 +13,21 @@
     border-radius: 2px;
     cursor: pointer;
 }
+
+.headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headline a {
+    background-color: orange;
+    padding: 4px;
+    border-radius: 2px;
+    color: inherit;
+    cursor: pointer;
+}
+
+.headline a:hover {
+    color: inherit;
+}
