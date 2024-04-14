@@ -1,32 +1,39 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage';
-import ProjectsPage from './pages/ProjectPage';
-import HomePage from './pages/HomePage';
-import TimelinePage from './pages/TimelinePage';
-import ServicesPage from './pages/ServicesPage';
-import ContractorsPage from './pages/ContractorsPage';
+import Page from './pages/common/Page';
+import Projects from './components/projects/Projects';
+import Timeline from './pages/Timeline';
+import Services from './pages/Services';
+import Contractors from './pages/Contractors';
+import Dashboard from './pages/Dashboard';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage/>,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: 'projekte',
-    element: <ProjectsPage />
-  },
-  {
-    path: 'zeitplan',
-    element: <TimelinePage />
-  },
-  {
-    path: 'leistungsverzeichnis',
-    element: <ServicesPage />
-  },
-  {
-    path: 'gewerke',
-    element: <ContractorsPage />
+    element: <Page />,
+    errorElement: <ErrorPage />,
+    children: [
+      { 
+        index: true,
+        element: <Dashboard />
+      },
+      {
+        path: 'projekte',
+        element: <Projects />
+      },
+      {
+        path: 'zeitplan',
+        element: <Timeline />
+      },
+      {
+        path: 'leistungsverzeichnis',
+        element: <Services />
+      },
+      {
+        path: 'gewerke',
+        element: <Contractors />
+      }
+    ]
   }
 ])
 

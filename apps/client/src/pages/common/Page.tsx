@@ -1,15 +1,10 @@
-import { ReactElement } from 'react';
 import './Page.css'
 import Footer from './Footer';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import { Outlet } from 'react-router-dom';
 
-interface PageProps {
-    content: ReactElement
-}
-
-const Page = (props: PageProps) => {
-    const { content } = props;
+const Page = () => {
     return (
         <div id="page-container">
             <div id="content-wrap">
@@ -17,7 +12,7 @@ const Page = (props: PageProps) => {
                 <div className="main">
                     <Sidebar />
                     <div className="content">
-                        { content }
+                        <Outlet />
                     </div>
                 </div>
             </div>

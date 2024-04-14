@@ -4,7 +4,7 @@ interface IconProps {
 
 const Icon = (props: IconProps) => {
     const { name } = props
-    const src = `${name}.svg`
+    const src = `/${name}.svg`
     return <img src={src}/>
 }
 

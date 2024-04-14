@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react';
-import Page from './common/Page';
 
-const HomePage = () => {
-    return (
-      <Page content={<Home/>}/>
-    )
-}
-  
-function Home() {
+function Dashboard() {
     const [greeting, setGreeting] = useState('')
 
     useEffect(() => {
@@ -17,4 +10,4 @@ function Home() {
     return <h1>{greeting}</h1>
 }
 
-export default HomePage
+export default Dashboard

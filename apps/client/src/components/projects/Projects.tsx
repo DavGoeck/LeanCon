@@ -1,8 +1,8 @@
-import { NavLink } from 'react-router-dom'
 import ProjectList from './ProjectList'
 import ProjectCreator from './ProjectCreator'
 
 import './Projects.css'
+import { Link } from 'react-router-dom'
 
 const Projects = () => {
 
@@ -18,7 +18,7 @@ const Projects = () => {
 const ProjectHeadline = () => {
     return (
         <div className="headline">
-            <h1>Projekte</h1> <NavLink to="/projekte/neu">Neues Projekt</NavLink>
+            <h1>Projekte</h1> <Link to="/projekte/neu">Neues Projekt</Link>
         </div>
     )
 }
