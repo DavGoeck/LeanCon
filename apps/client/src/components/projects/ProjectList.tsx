@@ -1,17 +1,25 @@
-import API from '../../api-client';
+import { useContext } from 'react'
+import API from '../../api-client'
 import { useQueryClient } from '@tanstack/react-query'
-
-type Project = {
-    id: string,
-    title: string
-}
+import ProjectContext from '../../context/ProjectContext'
+import { Project } from 'api-contract'
+import { useNavigate } from 'react-router-dom'
 
 const ProjectList = () => {
+    const navigate = useNavigate()
+    const { setProject } = useContext(ProjectContext)
 
     const { data } = API.projects.getAll.useQuery(['projects'])
-    const projects: Project[] = data?.body || []
+    const projects = data?.body || []
 
     const queryClient = useQueryClient() ;
+
+    const selectProject = (project: Project) => {
+        return () => {
+            setProject(project)
+            navigate('/')
+        }
+    }
 
     const { mutate: deletion } = API.projects.remove.useMutation({
         onSuccess: () => {
@@ -31,7 +39,7 @@ const ProjectList = () => {
         const { id, title } = project;
         return (
             <div className="project-row" key={id}>
-                <span className="project-title">{title}</span>
+                <span className="project-title" onClick={selectProject(project)}>{title}</span>
                 <span className="project-delete" onClick={deleteProject(id)}>Löschen</span>
             </div>
         )

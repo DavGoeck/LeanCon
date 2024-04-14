@@ -7,6 +7,7 @@ import Services from './pages/Services';
 import Contractors from './pages/Contractors';
 import Dashboard from './pages/Dashboard';
 import ProjectCreator from './components/projects/ProjectCreator';
+import AppContext from './context/AppContext';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
 ])
 
 const App = () => {
-  return <RouterProvider router={router}/>
+  return <>
+    <AppContext>
+      <RouterProvider router={router}/>
+    </AppContext>
+  </>
 }
 
 export default App
