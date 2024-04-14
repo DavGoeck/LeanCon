@@ -1,80 +1,71 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Page from './common/Page'
-import API from '../api/project'
-
-interface Project {
-    id: string,
-    title: string
-}
+import API from '../api-client'
+import { useQueryClient } from '@tanstack/react-query'
 
 const ProjectsPage = () => {
     return <Page content={<Projects/>}/>
 }
 
+const projectRowStyle = {
+    marginBottom: 8
+}
+
+const projectStyle = {
+    fontWeight: 'bold',
+    marginRight: 12
+}
+
+const deleteButtonStyle = {
+    backgroundColor: 'orange',
+    padding: 4,
+    borderRadius: 2,
+    cursor: 'pointer'
+}
+
+type Project = {
+    id: string,
+    title: string
+}
+
 const Projects = () => {
-    const [projects, setProjects] = useState<Project[]>([])
-
-    useEffect(() => {
-        const loadProjects = async () => {
-            const loadedProjects = await API.retrieveProjects()
-            setProjects(loadedProjects)
-        }
-        loadProjects()
-    }, [])
-
-    const deleteProject = (title: string) => {
-        return async () => {
-            const currentProjects = await API.deleteProject(title);
-            setProjects(currentProjects);
-        }
-    }
-
-    const createProject = async (title: string) => {
-        const currentProjects = await API.createProject(title)
-        setProjects(currentProjects)
-    }
 
     return (
-        <>
+        <div>
             <h1>Projekte</h1>
-            <div>
-                <ProjectList projects={projects} onDelete={deleteProject}/>
-                <ProjectCreator onCreate={createProject} />
-            </div>
-        </>
+            <ProjectList />
+            <ProjectCreator />
+        </div>
     )
 }
 
-interface ProjectListProps {
-    projects: Project[],
-    onDelete: (id: string) => (() => void)
-}
+const ProjectList = () => {
 
-const ProjectList = (props: ProjectListProps) => {
+    const { data } = API.projects.getAll.useQuery(['projects'])
+    const projects: Project[] = data?.body || []
 
-    const projectRowStyle = {
-        marginBottom: 8
+    const queryClient = useQueryClient();
+
+    const { mutate: deletion } = API.projects.remove.useMutation({
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['projects'] })
+        }
+    })
+
+    const deleteProject = (id: string) => {
+        return () => {
+            deletion({ params: { id } , body: {}})
+        }
     }
 
-    const projectStyle = {
-        fontWeight: 'bold',
-        marginRight: 12
-    }
+    if(!projects) return <></>
 
-    const deleteButtonStyle = {
-        backgroundColor: 'orange',
-        padding: 4,
-        borderRadius: 2,
-        cursor: 'pointer'
-    }
-    
-    const { projects, onDelete } = props;
     const projectList = projects.map(project => {
         const { id, title } = project;
         return (
             <div style={projectRowStyle} key={id}>
                 <span style={projectStyle}>{title}</span>
-                <span style={deleteButtonStyle} onClick={onDelete(id)}>Löschen</span>
+                <span style={deleteButtonStyle} onClick={deleteProject(id)}>Löschen</span>
             </div>
         )
     })
@@ -86,11 +77,19 @@ const ProjectList = (props: ProjectListProps) => {
     )
 }
 
-interface ProjectCreatorProps {
-    onCreate: (title: string) => void
-}
+const ProjectCreator = () => {
+    const queryClient = useQueryClient();
 
-const ProjectCreator = (props: ProjectCreatorProps) => {
+    const { mutate: creation } = API.projects.create.useMutation({
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['projects'] })
+        }
+    })
+
+    const createProject = (title: string) => {
+        creation({ body: { title } })
+    }
+
     const [title, setTitle] = useState('')
 
     const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -100,7 +99,7 @@ const ProjectCreator = (props: ProjectCreatorProps) => {
     const onSubmit: React.FormEventHandler<HTMLFormElement> = 
         async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
-            props.onCreate(title)
+            createProject(title)
             setTitle('')
         }
 
