@@ -1,5 +1,6 @@
 {
     "name": "api-contract",
+    "version": "0.1.0",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": "./dist/index.js"
