@@ -1,24 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Contractors } from 'api';
+import { Contractor } from 'api';
 import { v4 } from 'uuid'
 
 @Injectable()
 export class ContractorsService {
 
-    contractors: Contractors[] = []
+    contractors: Contractor[] = []
 
-    getAll(projectId: string) {
+    getAll(projectId) {
         return this.contractors
             .filter(contractor => contractor.projectId === projectId)
     }
 
-    create({ projectId, name }) {
-        const contractor = { id: v4(), projectId, name }
+    create(body) {
+        const contractor = { ...body, id: v4() }
         this.contractors.push(contractor)
         return contractor
     }
 
-    remove(id: string) {
+    remove(id) {
       const index = this.contractors.findIndex(project => project.id === id)
       if (index < 0) return null
 

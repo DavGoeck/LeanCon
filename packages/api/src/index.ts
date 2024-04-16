@@ -11,11 +11,13 @@ export const ProjectSchema = z.object({
 export const ContractorSchema = z.object({
     id: z.string(),
     name: z.string(),
-    projectId: z.string()
+    projectId: z.string(),
+    start: z.coerce.date(),
+    end: z.coerce.date()
 })
 
 export type Project = z.infer<typeof ProjectSchema>
-export type Contractors = z.infer<typeof ContractorSchema>
+export type Contractor = z.infer<typeof ContractorSchema>
 
 export const apiContract = c.router(
     {

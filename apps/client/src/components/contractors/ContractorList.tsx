@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import ProjectContext from '../../context/ProjectContext'
 import API from '../../api-client'
-import { Contractors } from 'api'
+import { Contractor } from 'api'
 
 import './Contractors.css'
 import { useQueryClient } from '@tanstack/react-query'
@@ -24,16 +24,17 @@ const ContractorsList = () => {
         () => deletion({ params: { id }, body: {}})
     )
 
-    const contractors: Contractors[] = data?.body || []
+    const contractors: Contractor[] = data?.body || []
 
     if(!contractors?.length) return <p>Noch keine Gewerke</p>
 
     const contractorsList = contractors.map(contractor => {
 
-        const { id, name } = contractor;
+        const { id, name, start, end } = contractor;
         return (
             <div className="contractor-row" key={id}>
                 <span className="contractor-name">{name}</span>
+                <span>{ start.toDateString() } - { end.toDateString() }</span>
                 <span className="contractor-delete" onClick={deleteContractor(id)}>Löschen</span>
             </div>
         )

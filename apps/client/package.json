@@ -12,9 +12,11 @@
   "dependencies": {
     "@tanstack/react-query": "^4.36.1",
     "@ts-rest/react-query": "^3.43.0",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-router-dom": "^5.3.3",
-    "api": "*",
+    "api": "file:../../packages/api",
     "react": "^18.2.0",
+    "react-datepicker": "^6.8.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3"
   },

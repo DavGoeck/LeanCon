@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "build:api": "npm run build --workspace api",
     "start": "node apps/server/dist/main"
   },
   "workspaces": [
