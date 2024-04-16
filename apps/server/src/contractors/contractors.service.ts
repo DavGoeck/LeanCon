@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Contractors } from 'api-contract';
+import { Contractors } from 'api';
 import { v4 } from 'uuid'
 
 @Injectable()

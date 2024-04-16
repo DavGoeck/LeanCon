@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import API from '../../api-client'
 import { useQueryClient } from '@tanstack/react-query'
 import ProjectContext from '../../context/ProjectContext'
-import { Project } from 'api-contract'
+import { Project } from 'api'
 import { useNavigate } from 'react-router-dom'
 
 const ProjectList = () => {

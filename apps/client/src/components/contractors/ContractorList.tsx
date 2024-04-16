@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import ProjectContext from '../../context/ProjectContext'
 import API from '../../api-client'
-import { Contractors } from 'api-contract'
+import { Contractors } from 'api'
 
 import './Contractors.css'
 import { useQueryClient } from '@tanstack/react-query'

@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common'
 import { ProjectsService } from './projects.service'
-import { apiContract } from 'api-contract'
+import { apiContract } from 'api'
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest'
 
 @Controller()

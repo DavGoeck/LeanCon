@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react'
 import ProjectContext from './ProjectContext'
-import { Project } from 'api-contract'
+import { Project } from 'api'
 
 type ChildProps = {
     children: ReactNode

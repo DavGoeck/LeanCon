@@ -19,6 +19,6 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['api-contract/**/*']
+    include: ['api/**/*']
   }
 })

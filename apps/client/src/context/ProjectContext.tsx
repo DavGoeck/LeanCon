@@ -1,4 +1,4 @@
-import { Project } from 'api-contract'
+import { Project } from 'api'
 import { createContext } from 'react'
 
 type ProjectUpdater = {

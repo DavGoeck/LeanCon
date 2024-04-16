@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { ContractorsService } from './contractors.service';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import { apiContract } from 'api-contract';
+import { apiContract } from 'api';
 
 @Controller()
 export class ContractorsController {
