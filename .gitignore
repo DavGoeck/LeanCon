@@ -1,3 +1,3 @@
 node_modules/
 .turbo/
-packages/api-contract/dist
+packages/api/dist/
