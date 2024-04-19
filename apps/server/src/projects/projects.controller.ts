@@ -13,13 +13,13 @@ export class ProjectsController {
       getAll: async ({ query: { title }}) => {
         return {
           status: 200,
-          body: this.projectsService.getAll(title)
+          body: await this.projectsService.getAll(title)
         }
       },
       getOne: async ({ params: { id } }) => {
-        const item = this.projectsService.getOne(id)
+        const project = await this.projectsService.getOne(id)
 
-        if(!item) {
+        if(!project) {
           return {
             status: 404,
             body: {
@@ -30,36 +30,36 @@ export class ProjectsController {
 
         return {
           status: 200,
-          body: item
+          body: project
         }
       },
       create: async ({ body: { title } }) => {
         return {
           status: 201, 
-          body: this.projectsService.create(title)
+          body: await this.projectsService.create(title)
         }
       },
       update: async ({ params: { id }, body }) => {
-        const item = this.projectsService.update(id, body)
+        const project = await this.projectsService.update(id, body)
 
-        if(!item) {
+        if(!project) {
           return {
             status: 404,
             body: {
-              message: 'Item not found.'
+              message: 'Project not found.'
             }
           }
         }
 
         return {
           status: 200,
-          body: item
+          body: project
         }
       },
       remove: async ({ params: { id }}) => {
-        const item = this.projectsService.remove(id)
+        const project = await this.projectsService.remove(id)
 
-        if(!item) {
+        if(!project) {
           return {
             status: 404,
             body: {

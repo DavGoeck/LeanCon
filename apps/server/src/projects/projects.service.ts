@@ -1,43 +1,40 @@
 import { Injectable } from '@nestjs/common'
 import { v4 } from 'uuid'
+import { PersistenceService } from '../persistence/persistence.service.js'
+
+import { Project } from '@prisma/client'
 
 @Injectable()
 export class ProjectsService {
+  constructor(private prisma: PersistenceService) { }
   private projects: Project[] = []
 
-  getAll(title: string): Project[] {
-    if(title) return this.projects.filter(project => project.title === 'title')
-    return this.projects
+  async getAll(title: string): Promise<Project[]> {
+    const allProjects = await this.prisma.project.findMany({})
+    if(title) return allProjects.filter(project => project.title === 'title')
+    return allProjects
   }
 
-  getOne(id: string): Project {
-    return this.projects.find(project => project.id === id)
+  async getOne(id: string): Promise<Project> {
+    return await this.prisma.project.findUnique({ where: { id } })
   }
 
-  create(title: string): Project {
+  async create(title: string): Promise<Project> {
     const project = { id: v4(), title }
-    this.projects.push(project)
-    return project
+    const savedProject = await this.prisma.project.create({ data: project })
+    return savedProject
   }
 
-  update(id, body): Project {
-    const index = this.projects.findIndex(project => project.id === id)
-    if (index < 0) return null
-
-    this.projects[index] = {
-        ...this.projects[index],
-        ...body
+  async update(id, body): Promise<Project> {
+    try {
+      return await this.prisma.project.update({ where: { id }, data: body })
+    } catch (e) {
+      return null
     }
-
-    return this.projects[index]
   }
 
-  remove(id: string) {
-    const index = this.projects.findIndex(project => project.id === id)
-    if (index < 0) return null
-
-    this.projects  = this.projects.filter(project => project.id !== id)
-
-    return {}
+  async remove(id: string) {
+    const project = await this.prisma.project.delete({ where: { id }})
+    return project ? {} : null
   }
 }

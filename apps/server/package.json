@@ -25,6 +25,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/serve-static": "^4.0.2",
+    "@prisma/client": "^5.12.1",
     "@ts-rest/nest": "^3.43.0",
     "api": "*",
     "reflect-metadata": "^0.2.0",

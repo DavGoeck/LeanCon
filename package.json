@@ -6,10 +6,16 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "build:api": "npm run build --workspace api",
-    "start": "node apps/server/dist/main"
+    "start": "node apps/server/dist/main",
+    "db:rm": "docker-compose rm -s -f -v dev-db",
+    "db:up": "docker-compose up -d dev-db",
+    "db:restart": "npm run db:rm && npm run db:up"
   },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "prisma": "^5.12.1"
+  }
 }

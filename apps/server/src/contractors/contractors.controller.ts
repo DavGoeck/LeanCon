@@ -13,19 +13,29 @@ export class ContractorsController {
       getAll: async ({ query: { projectId } }) => {
         return {
           status: 200,
-          body: this.contractorsService.getAll(projectId)
+          body: await this.contractorsService.getAll(projectId)
         }
       },
       create: async ({ body }) => {
         return {
           status: 201,
-          body: this.contractorsService.create(body)
+          body: await this.contractorsService.create(body)
         }
       },
-      remove: async ({ params: { id } }) => {
+      remove: async ({ params: { id }}) => {
+        const contractor = await this.contractorsService.remove(id)
+        if(!contractor) {
+          return {
+            status: 404,
+            body: {
+              message: 'Item not found!'
+            }
+          }
+        }
+
         return {
           status: 204,
-          body: this.contractorsService.remove(id)
+          body: contractor
         }
       }
     })

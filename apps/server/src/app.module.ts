@@ -5,6 +5,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ProjectsModule } from './projects/projects.module';
 import { ContractorsModule } from './contractors/contractors.module';
+import { PersistenceModule } from './persistence/persistence.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { ContractorsModule } from './contractors/contractors.module';
       rootPath: join(__dirname, '../..', 'client', 'dist')
     }),
     ProjectsModule,
-    ContractorsModule
+    ContractorsModule,
+    PersistenceModule
   ],
   controllers: [AppController],
   providers: [AppService],

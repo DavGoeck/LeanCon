@@ -1,30 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Contractor } from 'api';
 import { v4 } from 'uuid'
+import { PersistenceService } from '../persistence/persistence.service.js';
+import { Contractor } from '@prisma/client';
 
 @Injectable()
 export class ContractorsService {
+    constructor(private prisma: PersistenceService) {}
 
-    contractors: Contractor[] = []
-
-    getAll(projectId) {
-        return this.contractors
-            .filter(contractor => contractor.projectId === projectId)
+    async getAll(projectId): Promise<Contractor[]> {
+        return await this.prisma.contractor.findMany({ where: { projectId }})
     }
 
-    create(body) {
+    async create(body): Promise<Contractor> {
         const contractor = { ...body, id: v4() }
-        this.contractors.push(contractor)
-        return contractor
+        return await this.prisma.contractor.create({ data: contractor })
     }
 
-    remove(id) {
-      const index = this.contractors.findIndex(project => project.id === id)
-      if (index < 0) return null
-
-      this.contractors  = this.contractors.filter(project => project.id !== id)
-
-      return {}
+    async remove(id): Promise<Object> {
+        const contractor = this.prisma.contractor.delete({ where: { id }})
+        return contractor ? {} : null
     }
 
 }
