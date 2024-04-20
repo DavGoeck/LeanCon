@@ -10,5 +10,16 @@ services:
       POSTGRES_DB: leancon
     networks:
       - leancon
+  prod-db:
+    image: postgres:13
+    container_name: leancon-db
+    ports:
+      - 5434:5432
+    env_file:
+      - /home/smaug/.secrets
+    volumes:
+      - /home/smaug/data:/var/lib/postgresql/data
+    networks:
+      - leancon
 networks:
   leancon:

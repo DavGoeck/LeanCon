@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
 
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
 jobs:
   deploy:
     runs-on: self-hosted
@@ -16,7 +19,10 @@ jobs:
     - run: |
         npm i -D turbo
         npm i --workspace server @nestjs/serve-static
-        npm run build
+        npm i --workspace server @nestjs/config
+        echo "DATABASE_URL=$DATABASE_URL" > .env
+        npm run build:prod
+        npm run db:prod:restart
         pm2 stop 0
         pm2 start 0
         pm2 save

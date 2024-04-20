@@ -1,15 +1,20 @@
 {
   "devDependencies": {
+    "dotenv-cli": "^7.4.1",
     "turbo": "^1.13.2"
   },
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "build:prod": "dotenv -- turbo run build",
     "build:api": "npm run build --workspace api",
     "start": "node apps/server/dist/main",
     "db:rm": "docker-compose rm -s -f -v dev-db",
     "db:up": "docker-compose up -d dev-db",
-    "db:restart": "npm run db:rm && npm run db:up"
+    "db:restart": "npm run db:rm && npm run db:up && sleep 2 && npx prisma migrate deploy",
+    "db:prod:rm": "docker-compose rm -s -f -v prod-db",
+    "db:prod:up": "docker-compose up -d prod-db",
+    "db:prod:restart": "npm run db:prod:rm && npm run db:prod:up && sleep 2 && npx prisma migrate deploy"
   },
   "workspaces": [
     "apps/*",
