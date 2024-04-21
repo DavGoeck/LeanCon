@@ -3,6 +3,24 @@ import { z } from 'zod'
 
 const c = initContract()
 
+const IdSchema = z.object({
+    id: z.string()
+})
+
+const UserDataSchema = z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email(),
+})
+
+const IdenticalPasswordSchema = z.object({
+    password: z.string().min(8),
+    match: z.string()
+})
+
+export const UserRegistrationSchema = UserDataSchema.merge(IdenticalPasswordSchema)
+export const UserSchema = UserDataSchema.merge(IdSchema)
+
 export const ProjectSchema = z.object({
     id: z.string(),
     title: z.string()
@@ -16,8 +34,26 @@ export const ContractorSchema = z.object({
     end: z.coerce.date()
 })
 
+export const CredentialsSchema = z.object({
+    username: z.string(),
+    password: z.string()
+})
+
+export const JwtSchema = z.object({
+    "access-token": z.string()
+})
+
+export const ErrorSchema = z.object({
+    type: z.string().optional(),
+    message: z.string()
+})
+
+export type UserRegistration = z.infer<typeof UserRegistrationSchema>
+export type User = z.infer<typeof UserSchema>
 export type Project = z.infer<typeof ProjectSchema>
 export type Contractor = z.infer<typeof ContractorSchema>
+export type Credentials = z.infer<typeof CredentialsSchema>
+export type Jwt = z.infer<typeof JwtSchema>
 
 export const apiContract = c.router(
     {
@@ -108,6 +144,28 @@ export const apiContract = c.router(
                 responses: {
                     204: z.object({}),
                     404: z.object({})
+                }
+            }
+        },
+        auth: {
+            signUp: {
+                method: 'POST',
+                path: '/auth/signup',
+                body: UserRegistrationSchema,
+                responses: {
+                    201: UserRegistrationSchema
+                        .omit({ password: true, match: true})
+                        .merge(z.object({ id: z.string() })),
+                    409: ErrorSchema
+                }
+            },
+            signIn: {
+                method: 'POST',
+                path: '/auth/signin',
+                body: CredentialsSchema,
+                responses: {
+                    200: JwtSchema,
+                    401: ErrorSchema
                 }
             }
         }

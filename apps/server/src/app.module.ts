@@ -7,6 +7,8 @@ import { join } from 'path';
 import { ProjectsModule } from './projects/projects.module';
 import { ContractorsModule } from './contractors/contractors.module';
 import { PersistenceModule } from './persistence/persistence.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { PersistenceModule } from './persistence/persistence.module';
     }),
     ProjectsModule,
     ContractorsModule,
-    PersistenceModule
+    PersistenceModule,
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
