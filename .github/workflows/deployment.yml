@@ -2,10 +2,10 @@ name: LeanCon Deployment CI
 
 on:
   push:
-    branches: [ main ]
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
 jobs:
   deploy:
@@ -13,17 +13,17 @@ jobs:
     steps:
     - run: echo 'Auf gehts!'
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: 20
     - run: |
         npm i -D turbo
-        npm i --workspace server @nestjs/serve-static
-        npm i --workspace server @nestjs/config
-        echo "DATABASE_URL=$DATABASE_URL" > .env
+        npm i --workspace server @nestjs/serve-static @nestjs/config
+        echo "DATABASE_URL=\"$DATABASE_URL\"" > .env
+        echo "JWT_SECRET=\"$JWT_SECRET\"" >> .env
         npm run build:prod
-        npm run db:prod:restart
-        pm2 stop 0
-        pm2 start 0
+        npm run db:prod:update
+        pm2 stop lean-con
+        pm2 start lean-con
         pm2 save
         

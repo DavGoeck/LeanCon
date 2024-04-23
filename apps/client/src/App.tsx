@@ -1,14 +1,19 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorPage from './pages/ErrorPage';
+import AppContext from './context/AppContext';
 import Page from './pages/common/Page';
+import ErrorPage from './pages/ErrorPage';
 import Projects from './components/projects/Projects';
 import Timeline from './pages/Timeline';
 import Services from './pages/Services';
 import Contractors from './components/contractors/Contractors';
 import Dashboard from './pages/Dashboard';
 import ProjectCreator from './components/projects/ProjectCreator';
-import AppContext from './context/AppContext';
 import ContractorCreator from './components/contractors/ContractorCreator';
+import Login from './components/users/Login.tsx';
+import Content from './pages/common/Content.tsx';
+import Logout from './components/users/Logout.tsx';
+import Registration from './components/users/Registration.tsx';
+import UserForm from './components/users/UserForm.tsx';
 
 const router = createBrowserRouter([
   {
@@ -16,33 +21,56 @@ const router = createBrowserRouter([
     element: <Page />,
     errorElement: <ErrorPage />,
     children: [
-      { 
+      {
         index: true,
         element: <Dashboard />
       },
       {
-        path: 'projekte',
-        element: <Projects />
+        element: <Content />,
+        children: [
+          {
+            path: 'projekte',
+            element: <Projects />
+          },
+          {
+            path: 'projekte/neu',
+            element: <ProjectCreator />
+          },
+          {
+            path: 'zeitplan',
+            element: <Timeline />
+          },
+          {
+            path: 'leistungsverzeichnis',
+            element: <Services />
+          },
+          {
+            path: 'gewerke',
+            element: <Contractors />
+          },
+          {
+            path: 'gewerke/neu',
+            element: <ContractorCreator />
+          }
+        ]
       },
       {
-        path: 'projekte/neu',
-        element: <ProjectCreator />
-      },
-      {
-        path: 'zeitplan',
-        element: <Timeline />
-      },
-      {
-        path: 'leistungsverzeichnis',
-        element: <Services />
-      },
-      {
-        path: 'gewerke',
-        element: <Contractors />
-      },
-      {
-        path: 'gewerke/neu',
-        element: <ContractorCreator />
+        path: 'nutzer',
+        element: <UserForm />,
+        children: [
+          {
+            path: 'login',
+            element: <Login />
+          },
+          {
+            path: 'logout',
+            element: <Logout />
+          },
+          {
+            path: 'registrierung',
+            element: <Registration />
+          }
+        ]
       }
     ]
   }

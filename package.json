@@ -9,12 +9,10 @@
     "build:prod": "dotenv -- turbo run build",
     "build:api": "npm run build --workspace api",
     "start": "node apps/server/dist/main",
-    "db:rm": "docker-compose rm -s -f -v dev-db",
-    "db:up": "docker-compose up -d dev-db",
+    "db:rm": "docker compose rm -sfv dev-db",
+    "db:up": "docker compose up -d dev-db",
     "db:restart": "npm run db:rm && npm run db:up && sleep 2 && npx prisma migrate deploy",
-    "db:prod:rm": "docker-compose rm -s -f -v prod-db",
-    "db:prod:up": "docker-compose up -d prod-db",
-    "db:prod:restart": "npm run db:prod:rm && npm run db:prod:up && sleep 2 && npx prisma migrate deploy"
+    "db:prod:update": "npx prisma migrate deploy"
   },
   "workspaces": [
     "apps/*",

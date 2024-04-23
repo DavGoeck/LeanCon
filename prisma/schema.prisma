@@ -13,11 +13,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  firstName String
+  lastName String
+  sex Sex?
+
+  email String
+  hash String
+
+  @@map("users")
+}
+
 model Project {
   id String @id @default(uuid())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
 
   title String
 
@@ -32,6 +50,7 @@ model Contractor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+
   name String
   start DateTime?
   end DateTime?
@@ -40,4 +59,9 @@ model Contractor {
   project Project @relation(fields: [projectId], references: [id])
 
   @@map("contractors")
+}
+
+enum Sex {
+  MALE
+  FEMALE
 }
