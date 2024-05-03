@@ -13,4 +13,12 @@ export class PersistenceService extends PrismaClient {
             }
         });
     }
+
+    cleanDb() {
+        return this.$transaction([
+            this.contractor.deleteMany(),
+            this.project.deleteMany(),
+            this.user.deleteMany()
+        ])
+    }
 }

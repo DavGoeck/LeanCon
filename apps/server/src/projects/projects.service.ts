@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { v4 } from 'uuid'
-import { PersistenceService } from '../persistence/persistence.service.js'
+import { PersistenceService } from '../persistence/persistence.service'
 
 import { Project } from '@prisma/client'
 

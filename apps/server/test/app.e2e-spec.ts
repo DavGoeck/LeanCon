@@ -1,24 +1,71 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
+import { AppModule } from '../src/app.module';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { PersistenceService } from '../src/persistence/persistence.service';
+import * as pactum from 'pactum';
+import { Project } from 'api';
 
-describe('AppController (e2e)', () => {
-  let app: INestApplication;
+describe('App e2e', () => {
+  let app: INestApplication
+  let prisma: PersistenceService;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule]
+    }).compile()
+    app = moduleRef.createNestApplication()
+    await app.init()
+    await app.listen(3333)
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+    prisma = app.get(PersistenceService)
+    await prisma.cleanDb()
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
+    pactum.request.setBaseUrl('http://localhost:3333/api/')
+  })
+
+  afterAll(async () => {
+    app.close()
+  })
+
+  describe('Projects', () => {
+    describe('Lifecycle', () => {
+      let projectId;
+
+      const projectBody = { title: 'Neues Projekt' }
+      it('should create project', async () => {
+        projectId = await pactum
+          .spec()
+          .post('projects')
+          .withBody(projectBody)
+          .expectStatus(201)
+          .returns('id')
+
+      })
+
+      it('should retrieve projects', async () => {
+        await pactum.spec()
+          .get('projects')
+          .expectStatus(200)
+          .expectJsonLike([
+            {
+              title: 'Neues Projekt'
+            }
+          ])
+      })
+
+      it('should filter projects by title', async () => {
+        await pactum.spec()
+          .get('projects')
+          .withQueryParams({ title: 'Falscher Titel' })
+          .expectStatus(200)
+          .expectJson([])
+      })
+
+      it('should delete project', async () => {
+        await pactum.spec()
+          .delete(`projects/${projectId}`)
+          .expectStatus(204)
+      })
+    })
+  })
+})

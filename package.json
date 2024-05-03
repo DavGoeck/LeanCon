@@ -12,6 +12,13 @@
     "db:rm": "docker compose rm -sfv dev-db",
     "db:up": "docker compose up -d dev-db",
     "db:restart": "npm run db:rm && npm run db:up && sleep 2 && npx prisma migrate deploy",
+    "db:test:rm": "docker compose rm -sfv test-db",
+    "db:test:up": "docker compose up -d test-db",
+    "db:test:restart": "npm run db:test:rm && npm run db:test:up && sleep 2 && dotenv -e .env.test -- npx prisma migrate deploy",
+    "pretest:e2e": "npm run db:test:restart",
+    "test:e2e": "dotenv -e .env.test -- npm run --workspace server test:e2e",
+    "pretest:watch": "npm run db:test:restart",
+    "test:watch": "dotenv -e .env.test -- npm run --workspace server test:watch",
     "db:prod:update": "npx prisma migrate deploy"
   },
   "workspaces": [

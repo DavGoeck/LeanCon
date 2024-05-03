@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { PersistenceService } from '../persistence/persistence.service.js'
+import { PersistenceService } from '../persistence/persistence.service'
 
 @Injectable()
 export class UserService {
