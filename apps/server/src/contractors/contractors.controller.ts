@@ -1,9 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { ContractorsService } from './contractors.service';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { apiContract } from 'api';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class ContractorsController {
   constructor(private readonly contractorsService: ContractorsService) {}
 
@@ -24,18 +26,19 @@ export class ContractorsController {
       },
       remove: async ({ params: { id }}) => {
         const contractor = await this.contractorsService.remove(id)
+
         if(!contractor) {
           return {
             status: 404,
             body: {
-              message: 'Item not found!'
+              message: 'Contractor not found!'
             }
           }
         }
 
         return {
           status: 204,
-          body: contractor
+          body: {}
         }
       }
     })

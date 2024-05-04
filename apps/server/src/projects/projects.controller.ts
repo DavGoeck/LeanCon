@@ -1,16 +1,18 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseGuards } from '@nestjs/common'
 import { ProjectsService } from './projects.service'
 import { apiContract } from 'api'
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest'
+import { AuthGuard } from '@nestjs/passport'
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @TsRestHandler(apiContract.projects)
   async handler() {
     return tsRestHandler(apiContract.projects, {
-      getAll: async ({ query: { title }}) => {
+      getAll: async ({ query: { title } }) => {
         return {
           status: 200,
           body: await this.projectsService.getAll(title)

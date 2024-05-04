@@ -48,6 +48,10 @@ export const ErrorSchema = z.object({
     message: z.string()
 })
 
+export const BearerSchema = z.object({
+    authorization: z.string()
+})
+
 export type UserRegistration = z.infer<typeof UserRegistrationSchema>
 export type User = z.infer<typeof UserSchema>
 export type Project = z.infer<typeof ProjectSchema>
@@ -62,6 +66,7 @@ export const apiContract = c.router(
                 method: 'POST',
                 path: '/projects',
                 body: ProjectSchema.omit({ id: true }),
+                headers: BearerSchema,
                 responses: {
                     201: ProjectSchema
                 }
@@ -72,6 +77,7 @@ export const apiContract = c.router(
                 query: z.object({
                     title: z.string().optional()
                 }),
+                headers: BearerSchema,
                 responses: {
                     200: ProjectSchema.array()
                 }
@@ -109,6 +115,7 @@ export const apiContract = c.router(
                 pathParams: z.object({
                     id: z.string()
                 }),
+                headers: BearerSchema,
                 body: z.any(),
                 responses: {
                     204: z.object({}),

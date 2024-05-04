@@ -17,7 +17,10 @@ const useUser = () => {
         const data = token.split('.')[1]
         user = UserSchema.parse(JSON.parse(decode(data)))
     }
-    return { user, token, setToken, login, logout }
+
+    const bearer = `Bearer ${token}`
+
+    return { user, token, bearer, setToken, login, logout }
 }
 
 export default useUser

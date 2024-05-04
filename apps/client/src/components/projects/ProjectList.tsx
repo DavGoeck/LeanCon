@@ -4,12 +4,14 @@ import { useQueryClient } from '@tanstack/react-query'
 import ProjectContext from '../../context/ProjectContext'
 import { Project } from 'api'
 import { useNavigate } from 'react-router-dom'
+import useUser from '../../hooks/useUser.ts'
 
 const ProjectList = () => {
     const navigate = useNavigate()
+    const { bearer } = useUser()
     const { setProject } = useContext(ProjectContext)
 
-    const { data } = API.projects.getAll.useQuery(['projects'])
+    const { data } = API.projects.getAll.useQuery(['projects'], { headers: { authorization: bearer } })
     const projects = data?.body || []
 
     const queryClient = useQueryClient() ;
@@ -29,7 +31,7 @@ const ProjectList = () => {
 
     const deleteProject = (id: string) => {
         return () => {
-            deletion({ params: { id } , body: {}})
+            deletion({ params: { id } , body: {}, headers: { authorization: bearer }})
         }
     }
 

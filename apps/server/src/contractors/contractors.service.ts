@@ -17,8 +17,7 @@ export class ContractorsService {
     }
 
     async remove(id): Promise<Object> {
-        const contractor = this.prisma.contractor.delete({ where: { id }})
-        return contractor ? {} : null
+        return await this.prisma.contractor.delete({ where: { id }})
     }
 
 }

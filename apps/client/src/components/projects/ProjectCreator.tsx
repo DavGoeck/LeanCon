@@ -2,10 +2,12 @@ import { useState } from 'react'
 import API from '../../api-client'
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import useUser from '../../hooks/useUser.ts'
 
 const ProjectCreator = () => {
     const navigate = useNavigate()
     const queryClient = useQueryClient();
+    const { token } = useUser();
 
     const { mutate: creation } = API.projects.create.useMutation({
         onSuccess: () => {
@@ -14,7 +16,10 @@ const ProjectCreator = () => {
     })
 
     const createProject = (title: string) => {
-        creation({ body: { title } })
+        creation({
+            body: { title },
+            headers: { authorization: `Bearer ${token}` }
+        })
         navigate('/projekte')
     }
 
