@@ -3,16 +3,19 @@ import ProjectContext from '../context/ProjectContext'
 import API from '../api-client'
 import { Contractor } from 'api'
 import { datediff } from '../utils/Date'
+import useUser from '../hooks/useUser'
 
 const blockWidth = 48
 
 const Timeline = () => {
     const { project } = useContext(ProjectContext)
+    const { bearer } = useUser()
 
     if(!project) return <p>Kein Projekt ausgewählt</p>
 
     const { data } = API.contractors.getAll.useQuery(['contractors', project.id], {
-        query: { projectId: project.id }
+        query: { projectId: project.id },
+        headers: { authorization: bearer }
     })
 
     const contractors: Contractor[] = data?.body || []

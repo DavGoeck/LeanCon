@@ -132,6 +132,7 @@ export const apiContract = c.router(
                 query: z.object({
                     projectId: z.string()
                 }),
+                headers: BearerSchema,
                 responses: {
                     200: ContractorSchema.array()
                 }
@@ -140,6 +141,7 @@ export const apiContract = c.router(
                 method: 'POST',
                 path: '/contractors',
                 body: ContractorSchema.omit({ id: true }),
+                headers: BearerSchema,
                 responses: {
                     201: ContractorSchema
                 }
@@ -147,6 +149,7 @@ export const apiContract = c.router(
             remove: {
                 method: 'DELETE',
                 path: '/contractors/:id',
+                headers: BearerSchema,
                 body: z.any(),
                 responses: {
                     204: z.object({}),

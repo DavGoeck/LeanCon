@@ -4,10 +4,12 @@ import { useQueryClient } from '@tanstack/react-query'
 import { redirect, useNavigate } from 'react-router-dom'
 import ProjectContext from '../../context/ProjectContext'
 import { currentDate, IntervalPicker } from '../../utils/Date'
+import useUser from '../../hooks/useUser'
 
 const ContractorCreator = () => {
     const { project } = useContext(ProjectContext)
     const navigate = useNavigate()
+    const { bearer } = useUser()
 
     if(!project) {
         redirect('/')
@@ -39,7 +41,10 @@ const ContractorCreator = () => {
 
     const createContractor = () => {
         if ( !startDate || !endDate ) return
-        creation({ body: { name, projectId: project.id, start: startDate, end: endDate } })
+        creation({ 
+            body: { name, projectId: project.id, start: startDate, end: endDate } ,
+            headers: { authorization: bearer }
+        })
         navigate('/gewerke')
     }
 

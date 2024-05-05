@@ -5,15 +5,18 @@ import { Contractor } from 'api'
 
 import './Contractors.css'
 import { useQueryClient } from '@tanstack/react-query'
+import useUser from '../../hooks/useUser'
 
 const ContractorsList = () => {
     const { project } = useContext(ProjectContext)
     const queryClient = useQueryClient()
+    const { bearer } = useUser()
 
     if(!project) return <p>Kein Projekt ausgewählt</p>
 
     const { data } = API.contractors.getAll.useQuery(['contractors', project.id], {
-        query: { projectId: project.id }
+        query: { projectId: project.id },
+        headers: { authorization: bearer }
     })
 
     const { mutate: deletion } = API.contractors.remove.useMutation({
@@ -21,7 +24,7 @@ const ContractorsList = () => {
     })
 
     const deleteContractor = (id: string) => (
-        () => deletion({ params: { id }, body: {}})
+        () => deletion({ params: { id }, body: {}, headers: { authorization: bearer }})
     )
 
     const contractors: Contractor[] = data?.body || []
