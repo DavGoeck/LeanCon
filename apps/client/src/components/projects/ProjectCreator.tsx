@@ -20,7 +20,7 @@ const ProjectCreator = () => {
             body: { title },
             headers: { authorization: `Bearer ${token}` }
         })
-        navigate('/projekte')
+        navigate('/')
     }
 
     const [title, setTitle] = useState('')

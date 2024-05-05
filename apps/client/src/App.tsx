@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppContext from './context/AppContext';
 import Page from './pages/common/Page';
 import ErrorPage from './pages/ErrorPage';
-import Projects from './components/projects/Projects';
 import Timeline from './pages/Timeline';
 import Services from './pages/Services';
 import Contractors from './components/contractors/Contractors';
@@ -14,6 +13,7 @@ import Content from './pages/common/Content.tsx';
 import Logout from './components/users/Logout.tsx';
 import Registration from './components/users/Registration.tsx';
 import UserForm from './components/users/UserForm.tsx';
+import Project from './components/projects/Project.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,35 +22,37 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <Dashboard />
-      },
-      {
         element: <Content />,
         children: [
           {
-            path: 'projekte',
-            element: <Projects />
+            index: true,
+            element: <Dashboard />
           },
           {
-            path: 'projekte/neu',
+            path: 'p/neu',
             element: <ProjectCreator />
           },
           {
-            path: 'zeitplan',
-            element: <Timeline />
-          },
-          {
-            path: 'leistungsverzeichnis',
-            element: <Services />
-          },
-          {
-            path: 'gewerke',
-            element: <Contractors />
-          },
-          {
-            path: 'gewerke/neu',
-            element: <ContractorCreator />
+            path: 'p/:slug',
+            element: <Project />,
+            children: [
+              {
+                path: 'zeitplan',
+                element: <Timeline />
+              },
+              {
+                path: 'leistungsverzeichnis',
+                element: <Services />
+              },
+              {
+                path: 'gewerke',
+                element: <Contractors />
+              },
+              {
+                path: 'gewerke/neu',
+                element: <ContractorCreator />
+              }
+            ]
           }
         ]
       },

@@ -38,6 +38,7 @@ model Project {
 
 
   title String
+  slug String @default("project-slug")
 
   contractors Contractor[]
 

@@ -3,11 +3,11 @@ import { v4 } from 'uuid'
 import { PersistenceService } from '../persistence/persistence.service'
 
 import { Project } from '@prisma/client'
+import { toSlug } from '../utils/strings'
 
 @Injectable()
 export class ProjectsService {
   constructor(private prisma: PersistenceService) { }
-  private projects: Project[] = []
 
   async getAll(title: string): Promise<Project[]> {
     const allProjects = await this.prisma.project.findMany({})
@@ -20,9 +20,8 @@ export class ProjectsService {
   }
 
   async create(title: string): Promise<Project> {
-    const project = { id: v4(), title }
-    const savedProject = await this.prisma.project.create({ data: project })
-    return savedProject
+    const project = { id: v4(), title, slug: toSlug(title) }
+    return await this.prisma.project.create({ data: project })
   }
 
   async update(id, body): Promise<Project> {

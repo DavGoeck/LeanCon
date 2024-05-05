@@ -1,14 +1,15 @@
 import { useContext, useState } from 'react'
 import API from '../../api-client'
 import { useQueryClient } from '@tanstack/react-query'
-import { redirect, useNavigate } from 'react-router-dom'
+import { redirect } from 'react-router-dom'
 import ProjectContext from '../../context/ProjectContext'
 import { currentDate, IntervalPicker } from '../../utils/Date'
 import useUser from '../../hooks/useUser'
+import useNav from '../../hooks/useNav'
 
 const ContractorCreator = () => {
     const { project } = useContext(ProjectContext)
-    const navigate = useNavigate()
+    const { navInProject } = useNav()
     const { bearer } = useUser()
 
     if(!project) {
@@ -45,7 +46,7 @@ const ContractorCreator = () => {
             body: { name, projectId: project.id, start: startDate, end: endDate } ,
             headers: { authorization: bearer }
         })
-        navigate('/gewerke')
+        navInProject('gewerke')
     }
 
     const onSubmit: React.FormEventHandler<HTMLFormElement> = 

@@ -1,15 +1,17 @@
-import { useContext } from 'react'
-import API from '../../api-client'
+import useProject from '../../hooks/useProject'
 import { useQueryClient } from '@tanstack/react-query'
-import ProjectContext from '../../context/ProjectContext'
-import { Project } from 'api'
 import { useNavigate } from 'react-router-dom'
 import useUser from '../../hooks/useUser.ts'
+
+import { Project } from 'api'
+import API from '../../api-client'
+
+import './Projects.css'
 
 const ProjectList = () => {
     const navigate = useNavigate()
     const { bearer } = useUser()
-    const { setProject } = useContext(ProjectContext)
+    const { setProject } = useProject()
 
     const { data } = API.projects.getAll.useQuery(['projects'], { headers: { authorization: bearer } })
     const projects = data?.body || []
@@ -19,7 +21,7 @@ const ProjectList = () => {
     const selectProject = (project: Project) => {
         return () => {
             setProject(project)
-            navigate('/')
+            navigate(`/p/${project.slug}`)
         }
     }
 
@@ -47,11 +49,7 @@ const ProjectList = () => {
         )
     })
 
-    return (
-        <div>
-            { projectList }
-        </div>
-    )
+    return (<>{ projectList }</>)
 }
 
 export default ProjectList

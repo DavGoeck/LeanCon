@@ -23,7 +23,8 @@ export const UserSchema = UserDataSchema.merge(IdSchema)
 
 export const ProjectSchema = z.object({
     id: z.string(),
-    title: z.string()
+    title: z.string(),
+    slug: z.string()
 })
 
 export const ContractorSchema = z.object({
@@ -65,7 +66,7 @@ export const apiContract = c.router(
             create: {
                 method: 'POST',
                 path: '/projects',
-                body: ProjectSchema.omit({ id: true }),
+                body: ProjectSchema.omit({ id: true, slug: true }),
                 headers: BearerSchema,
                 responses: {
                     201: ProjectSchema

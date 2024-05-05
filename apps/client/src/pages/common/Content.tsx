@@ -1,6 +1,8 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import Sidebar from './Sidebar.tsx'
 import { useEffect } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+
+import Sidebar from '../../components/navigation/Sidebar.tsx'
+
 import useUser from '../../hooks/useUser.ts'
 
 const Content = () => {
