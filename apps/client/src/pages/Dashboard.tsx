@@ -4,7 +4,7 @@ function Dashboard() {
     return <>
         <div className="headline">
             <h1>LeanCon Dashboard</h1>
-            <Link to={`/p/neu`}>Neues Projekt</Link>
+            <Link to={'/p/neu'}>Neues Projekt</Link>
         </div>
         <ProjectList />
     </>
