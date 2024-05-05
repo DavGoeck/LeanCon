@@ -5,6 +5,11 @@
 .project-row .project-title {
     font-weight: bold;
     margin-right: 12px;
+    cursor: pointer;
+}
+
+.project-row .project-title:hover {
+    background-color: rgba(0,0,0,0.1);
 }
 
 .project-row .project-delete {
