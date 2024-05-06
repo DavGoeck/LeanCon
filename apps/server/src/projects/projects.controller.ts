@@ -13,8 +13,8 @@ export class ProjectsController {
   @TsRestHandler(apiContract.projects)
   async handler() {
     return tsRestHandler(apiContract.projects, {
-      getAll: async ({ query: { title } }) => {
-        const projects = await this.projectsService.getAll(title)
+      getAll: async ({ query: { title, slug } }) => {
+        const projects = await this.projectsService.getAll(title, slug)
         return ok(projects)
       },
       getOne: async ({ params: { id } }) => {

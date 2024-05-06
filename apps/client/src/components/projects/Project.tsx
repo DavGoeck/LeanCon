@@ -2,17 +2,37 @@ import { useEffect } from 'react'
 import useProject from '../../hooks/useProject'
 import useNav from '../../hooks/useNav'
 
-import { Outlet } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 
 import './Project.css'
+import API from '../../api-client'
+import useUser from '../../hooks/useUser'
 
 const Project = () => {
     const { getHome } = useNav()
-    const { project } = useProject()
-    
+    const { project, setProject } = useProject()
+    const { bearer } = useUser()
+    const { slug } = useParams()
+
     useEffect(() => {
-        if(!project) getHome()
-    }, [project])
+        const getProject = async () => {
+            if (project) return
+
+            if (bearer) {
+                if (slug) {
+                    const response = await API.projects.getAll.query({ query: { slug }, headers: { authorization: bearer } })
+                    const projects = response.body
+                    if (projects.length) {
+                        const queriedProject = projects[0]
+                        setProject(queriedProject)
+                    }
+                } else {
+                    getHome()
+                }
+            }
+        }
+        getProject()
+    }, [project, slug, bearer])
 
     if (project) {
         return (

@@ -9,14 +9,19 @@ import { toSlug } from '../utils/strings'
 export class ProjectsService {
   constructor(private prisma: PersistenceService) { }
 
-  async getAll(title: string): Promise<Project[]> {
-    const allProjects = await this.prisma.project.findMany({})
-    if(title) return allProjects.filter(project => project.title === 'title')
-    return allProjects
+  async getAll(title: string, slug: string): Promise<Project[]> {
+    const filter: any = {}
+    if (title) filter.title = title
+    if (slug) filter.slug = slug
+    return await this.prisma.project.findMany({ where: filter })
   }
 
   async getOne(id: string): Promise<Project> {
     return await this.prisma.project.findUnique({ where: { id } })
+  }
+
+  async getBySlug(slug: string): Promise<Project> {
+    return await this.prisma.project.findFirst({ where: { slug }})
   }
 
   async create(title: string): Promise<Project> {

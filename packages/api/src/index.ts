@@ -76,7 +76,8 @@ export const apiContract = c.router(
                 method: 'GET',
                 path: '/projects',
                 query: z.object({
-                    title: z.string().optional()
+                    title: z.string().optional(),
+                    slug: z.string().optional()
                 }),
                 headers: BearerSchema,
                 responses: {
