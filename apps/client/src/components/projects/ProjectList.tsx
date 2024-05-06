@@ -13,10 +13,11 @@ const ProjectList = () => {
     const { bearer } = useUser()
     const { setProject } = useProject()
 
-    const { data } = API.projects.getAll.useQuery(['projects'], { headers: { authorization: bearer } })
+
+    const { data } = API.projects.getAll.useQuery(['projects', bearer], { headers: { authorization: bearer }})
     const projects = data?.body || []
 
-    const queryClient = useQueryClient() ;
+    const queryClient = useQueryClient()
 
     const selectProject = (project: Project) => {
         return () => {

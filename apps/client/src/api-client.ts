@@ -4,7 +4,8 @@ import { apiContract } from 'api'
 const API = initQueryClient(apiContract, {
     validateResponse: true,
     baseHeaders: {},
-    baseUrl: ''
+    baseUrl: '',
+    credentials: 'omit'
 })
 
 export default API;

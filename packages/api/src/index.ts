@@ -51,7 +51,7 @@ export const ErrorSchema = z.object({
 
 export const BearerSchema = z.object({
     authorization: z.string()
-})
+}).optional()
 
 export type UserRegistration = z.infer<typeof UserRegistrationSchema>
 export type User = z.infer<typeof UserSchema>
@@ -91,9 +91,7 @@ export const apiContract = c.router(
                 }),
                 responses: {
                     200: ProjectSchema,
-                    404: z.object({
-                        message: z.string()
-                    })
+                    404: ErrorSchema
                 }
             },
             update: {
@@ -105,9 +103,7 @@ export const apiContract = c.router(
                 body: ProjectSchema.omit({ id: true }).partial(),
                 responses: {
                     200: ProjectSchema,
-                    404: z.object({
-                        message: z.string()
-                    })
+                    404: ErrorSchema
                 }
             },
             remove: {
@@ -120,9 +116,7 @@ export const apiContract = c.router(
                 body: z.any(),
                 responses: {
                     204: z.object({}),
-                    404: z.object({
-                        message: z.string()
-                    })
+                    404: ErrorSchema
                 }
             }
         },
@@ -176,6 +170,17 @@ export const apiContract = c.router(
                 body: CredentialsSchema,
                 responses: {
                     200: JwtSchema,
+                    401: ErrorSchema
+                }
+            }
+        },
+        user: {
+            me: {
+                method: 'GET',
+                path: '/user/me',
+                headers: BearerSchema,
+                responses: {
+                    200: UserSchema,
                     401: ErrorSchema
                 }
             }

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import ProjectContext from '../context/ProjectContext'
 import API from '../api-client'
 import { Contractor } from 'api'
-import { datediff } from '../utils/Date'
+import { datediff } from '../components/helpers/Date'
 import useUser from '../hooks/useUser'
 
 const blockWidth = 48

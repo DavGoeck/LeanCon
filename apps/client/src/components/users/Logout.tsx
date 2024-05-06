@@ -1,15 +1,12 @@
-import { useNavigate } from 'react-router-dom'
-import useUser from '../../hooks/useUser.ts'
-import { useEffect } from 'react'
+import useUser from '../../hooks/useUser'
+import useNav from '../../hooks/useNav'
 
 const Logout = () => {
     const { logout } = useUser()
-    const navigate = useNavigate()
+    const { toLogin } = useNav()
 
-    useEffect(() => {
-        logout()
-        navigate('/nutzer/login')
-    }, [])
+    logout()
+    toLogin()
 
     return <></>
 }

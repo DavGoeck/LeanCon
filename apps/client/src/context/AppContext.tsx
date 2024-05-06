@@ -2,6 +2,7 @@ import { ReactNode, useState } from 'react'
 import ProjectContext from './ProjectContext'
 import { Project } from 'api'
 import TokenContext from './TokenContext.tsx'
+import { CookiesProvider } from 'react-cookie'
 
 type ChildProps = {
     children: ReactNode
@@ -12,11 +13,13 @@ const AppContext = (props: ChildProps) => {
     const [ project, setProject ] = useState<Project | null>(null)
 
     return <>
-        <TokenContext.Provider value={{ token, setToken }}>
-            <ProjectContext.Provider value={{ project, setProject }}>
-                {props.children}
-            </ProjectContext.Provider>
-        </TokenContext.Provider>
+        <CookiesProvider>
+            <TokenContext.Provider value={{ token, setToken }}>
+                <ProjectContext.Provider value={{ project, setProject }}>
+                    {props.children}
+                </ProjectContext.Provider>
+            </TokenContext.Provider>
+        </CookiesProvider>
     </>
 }
 

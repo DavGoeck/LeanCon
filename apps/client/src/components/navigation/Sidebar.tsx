@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css'
-import Icon from '../../utils/Icon';
+import Icon from '../helpers/Icon';
 import useProject from '../../hooks/useProject';
 import ProjectLink from './ProjectLink';
 

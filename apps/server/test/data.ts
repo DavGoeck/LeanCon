@@ -16,6 +16,17 @@ export const userCredentials = {
     password: pass
 }
 
+export const randomUserInfo = () => {
+    const pass = randomText(8)
+    return {
+        firstName: randomText(8),
+        lastName: randomText(8),
+        email: randomMail(8),
+        password: pass,
+        match: pass
+    }
+}
+
 export const contractorData = (projectId: string) : Partial<Contractor> => {
     const date = new Date()
     return {
@@ -24,4 +35,22 @@ export const contractorData = (projectId: string) : Partial<Contractor> => {
         end: date,
         projectId
     }
+}
+
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+const randomText = (length: number) => {
+    if (length < 0) return randomText(0)
+
+    let text = ""
+    for(let i=0; i<length; i++) {
+        const r = Math.floor(ALPHABET.length * Math.random())
+        text += ALPHABET.charAt(r)
+    }
+
+    return text;
+}
+
+const randomMail = (length: number) => {
+    return `${randomText(length)}@mail.com`
 }

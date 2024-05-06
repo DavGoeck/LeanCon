@@ -14,7 +14,13 @@ const useNav = () => {
         }
     }
 
-    return { getHome, navInProject }
+    const toLogin = (from: string | undefined = undefined) => {
+        const params = from && `?from=${encodeURIComponent(from)}`
+        const path = `/nutzer/login${params}`
+        navigate(path)
+    }
+
+    return { getHome, navInProject, toLogin }
 }
 
 export default useNav

@@ -13,7 +13,7 @@ const Login = () => {
 }
 
 const LoginForm = () => {
-    const { login, setToken } = useUser()
+    const { login } = useUser()
     const navigate = useNavigate()
 
     const [ params ] = useSearchParams()
@@ -26,7 +26,6 @@ const LoginForm = () => {
     const onSubmit = async () => {
         const { status, body } = await login({ username, password })
         if(status === 200) {
-            setToken(body['access-token'])
             navigate(from)
         } else {
             setError(body.message)
