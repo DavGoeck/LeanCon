@@ -31,11 +31,9 @@ const ProjectList = () => {
         }
     })
 
-    const deleteProject = (id: string) => {
-        return () => {
-            deletion({ params: { id } , body: {}, headers: { authorization: bearer }})
-        }
-    }
+    const deleteProject = (id: string) => (() => {
+        deletion({ params: { id } , body: {}, headers: { authorization: bearer }})
+    })
 
     if(!projects) return <></>
 
