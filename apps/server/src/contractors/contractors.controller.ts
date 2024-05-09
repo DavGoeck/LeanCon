@@ -3,6 +3,7 @@ import { ContractorsService } from './contractors.service';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { apiContract } from 'api';
 import { AuthGuard } from '@nestjs/passport';
+import { created, noContent, notFound, ok } from '../utils/http';
 
 @Controller()
 @UseGuards(AuthGuard('jwt'))
@@ -13,33 +14,16 @@ export class ContractorsController {
   async handler() {
     return tsRestHandler(apiContract.contractors, {
       getAll: async ({ query: { projectId } }) => {
-        return {
-          status: 200,
-          body: await this.contractorsService.getAll(projectId)
-        }
+        const contractors = await this.contractorsService.getAll(projectId)
+        return ok(contractors)
       },
       create: async ({ body }) => {
-        return {
-          status: 201,
-          body: await this.contractorsService.create(body)
-        }
+        const contractor = await this.contractorsService.create(body)
+        return created(contractor)
       },
       remove: async ({ params: { id }}) => {
         const contractor = await this.contractorsService.remove(id)
-
-        if(!contractor) {
-          return {
-            status: 404,
-            body: {
-              message: 'Contractor not found!'
-            }
-          }
-        }
-
-        return {
-          status: 204,
-          body: {}
-        }
+        return contractor ? noContent() : notFound({ message: 'Contractor not found!' })
       }
     })
   }

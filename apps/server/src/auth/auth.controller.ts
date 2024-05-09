@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { apiContract } from 'api';
+import { created, ok } from '../utils/http';
 
 @Controller()
 export class AuthController {
@@ -11,16 +12,12 @@ export class AuthController {
   async handle() {
     return tsRestHandler(apiContract.auth, {
       signUp: async ({ body }) => {
-        return {
-          status: 201,
-          body: await this.authService.signUp(body)
-        }
+        const user = await this.authService.signUp(body)
+        return created(user)
       },
       signIn: async ({ body }) => {
-        return {
-          status: 200,
-          body: await this.authService.signIn(body)
-        }
+        const user = await this.authService.signIn(body)
+        return ok(user)
       }
     })
   }

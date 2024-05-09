@@ -3,6 +3,7 @@ import { ProjectsService } from './projects.service'
 import { apiContract } from 'api'
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest'
 import { AuthGuard } from '@nestjs/passport'
+import { created, noContent, notFound, ok } from '../utils/http'
 
 @Controller()
 @UseGuards(AuthGuard('jwt'))
@@ -13,67 +14,23 @@ export class ProjectsController {
   async handler() {
     return tsRestHandler(apiContract.projects, {
       getAll: async ({ query: { title } }) => {
-        return {
-          status: 200,
-          body: await this.projectsService.getAll(title)
-        }
+        const projects = await this.projectsService.getAll(title)
+        return ok(projects)
       },
       getOne: async ({ params: { id } }) => {
         const project = await this.projectsService.getOne(id)
-
-        if(!project) {
-          return {
-            status: 404,
-            body: {
-              message: 'Item not found.'
-            }
-          }
-        }
-
-        return {
-          status: 200,
-          body: project
-        }
+        return project ? ok(project) : notFound({ message: 'Project not found.' })
       },
       create: async ({ body: { title } }) => {
-        return {
-          status: 201, 
-          body: await this.projectsService.create(title)
-        }
+        return created(await this.projectsService.create(title))
       },
       update: async ({ params: { id }, body }) => {
         const project = await this.projectsService.update(id, body)
-
-        if(!project) {
-          return {
-            status: 404,
-            body: {
-              message: 'Project not found.'
-            }
-          }
-        }
-
-        return {
-          status: 200,
-          body: project
-        }
+        return project ? ok(project) : notFound({ message: 'Project not found.' })
       },
       remove: async ({ params: { id }}) => {
         const project = await this.projectsService.remove(id)
-
-        if(!project) {
-          return {
-            status: 404,
-            body: {
-              message: 'Item not found!'
-            }
-          }
-        }
-
-        return {
-          status: 204,
-          body: {}
-        }
+        return project ? noContent() : notFound({ message: 'Project not found!' })
       }
     })
   }
