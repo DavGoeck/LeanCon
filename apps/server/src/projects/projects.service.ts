@@ -26,8 +26,9 @@ export class ProjectsService {
   }
 
   async update(id, body): Promise<Project> {
+    const data = this.createUpdateObject(body)
     try {
-      return await this.prisma.project.update({ where: { id }, data: body })
+      return await this.prisma.project.update({ where: { id }, data })
     } catch (e) {
       return null
     }
@@ -36,5 +37,13 @@ export class ProjectsService {
   async remove(id: string) {
     const project = await this.prisma.project.delete({ where: { id }})
     return project ? {} : null
+  }
+
+  createUpdateObject = (body: Partial<Project>) => {
+    const data = {...body}
+    if (data.title) {
+      data.slug = toSlug(data.title)
+    } 
+    return data
   }
 }

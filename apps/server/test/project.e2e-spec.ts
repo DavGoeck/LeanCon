@@ -47,6 +47,20 @@ describe('App e2e', () => {
         .expectJson([])
     })
 
+    it('should update projects', async () => {
+      const newTitle = 'Neuer Titel'
+      const newSlug = 'neuer-titel'
+      await pactum.spec()
+        .patch(`projects/${projectId}`)
+        .withBody({ title: newTitle })
+        .expectStatus(200)
+        .expectJsonLike({
+          id: projectId,
+          title: newTitle,
+          slug: newSlug
+        })
+    })
+
     it('should delete project', async () => {
       await pactum.spec()
         .delete(`projects/${projectId}`)

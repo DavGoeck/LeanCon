@@ -20,7 +20,7 @@ const useNav = () => {
         navigate(path)
     }
 
-    return { getHome, navInProject, toLogin }
+    return { navigate, getHome, navInProject, toLogin }
 }
 
 export default useNav

@@ -101,6 +101,7 @@ export const apiContract = c.router(
                 pathParams: z.object({
                     id: z.string()
                 }),
+                headers: BearerSchema,
                 body: ProjectSchema.omit({ id: true }).partial(),
                 responses: {
                     200: ProjectSchema,

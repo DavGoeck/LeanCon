@@ -14,6 +14,8 @@ import Logout from './components/users/Logout.tsx';
 import Registration from './components/users/Registration.tsx';
 import UserForm from './components/users/UserForm.tsx';
 import Project from './components/projects/Project.tsx';
+import ProjectModifier from './components/projects/ProjectModifier';
+import ProjectDetails from './components/projects/ProjectDetails';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
             path: 'p/:slug',
             element: <Project />,
             children: [
+              {
+                index: true,
+                element: <ProjectDetails />
+              },
+              {
+                path: 'bearbeiten',
+                element: <ProjectModifier />
+              },
               {
                 path: 'zeitplan',
                 element: <Timeline />
