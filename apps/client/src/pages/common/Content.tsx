@@ -8,7 +8,6 @@ import useUser from '../../hooks/useUser'
 const Content = () => {
     const { checkLogin } = useUser()
 
-    // Get this in the code somehow
     useEffect(() => {
         checkLogin()
     }, [])
