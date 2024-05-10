@@ -6,7 +6,7 @@ const ProjectDetails = () => {
     if (!project) return <></>
     return <>
         <div className="headline">
-            <h1>LeanCon Dashboard</h1>
+            <h1>Projekt Details</h1>
             <ProjectLink to={'bearbeiten'}>Bearbeiten</ProjectLink>
         </div>
         <div>
