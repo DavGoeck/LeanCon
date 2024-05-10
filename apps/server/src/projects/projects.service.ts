@@ -20,10 +20,6 @@ export class ProjectsService {
     return await this.prisma.project.findUnique({ where: { id } })
   }
 
-  async getBySlug(slug: string): Promise<Project> {
-    return await this.prisma.project.findFirst({ where: { slug }})
-  }
-
   async create(title: string): Promise<Project> {
     const project = { id: v4(), title, slug: toSlug(title) }
     return await this.prisma.project.create({ data: project })
