@@ -40,6 +40,8 @@ model Project {
   title String
   slug String
 
+  published DateTime?
+
   contractors Contractor[]
 
   @@map("projects")

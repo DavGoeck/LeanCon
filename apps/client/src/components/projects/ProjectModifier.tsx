@@ -19,7 +19,6 @@ const ProjectModifier = () => {
 
     const handleTitleChange = handleChange(setTitle)
 
-
     const updateProject = async (title: string) => {
         const response = await API.projects.update.mutation({
             params: { id: project.id },

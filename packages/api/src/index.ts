@@ -24,7 +24,8 @@ export const UserSchema = UserDataSchema.merge(IdSchema)
 export const ProjectSchema = z.object({
     id: z.string(),
     title: z.string(),
-    slug: z.string()
+    slug: z.string(),
+    published: z.coerce.date().optional()
 })
 
 export const ContractorSchema = z.object({

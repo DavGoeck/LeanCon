@@ -61,6 +61,18 @@ describe('App e2e', () => {
         })
     })
 
+    it('should publish projects', async () => {
+      const publishingDate = new Date("2024-07-01")
+      await pactum.spec()
+        .patch(`projects/${projectId}`)
+        .withBody({ published:  publishingDate})
+        .expectStatus(200)
+        .expectJsonLike({
+          id: projectId,
+          published: '2024-07-01T00:00:00.000Z'
+        })
+    })
+
     it('should delete project', async () => {
       await pactum.spec()
         .delete(`projects/${projectId}`)
