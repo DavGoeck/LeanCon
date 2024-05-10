@@ -14,7 +14,7 @@ const useNav = () => {
         }
     }
 
-    const toLogin = (from: string | undefined = undefined) => {
+    const toLogin = (from?: string | undefined) => {
         const params = from ? `?from=${encodeURIComponent(from)}` : ''
         const path = `/nutzer/login${params}`
         navigate(path)
