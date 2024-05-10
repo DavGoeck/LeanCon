@@ -1,12 +1,15 @@
 import useUser from '../../hooks/useUser'
 import useNav from '../../hooks/useNav'
+import { useEffect } from 'react'
 
 const Logout = () => {
     const { logout } = useUser()
     const { toLogin } = useNav()
 
-    logout()
-    toLogin()
+    useEffect(() => {
+        logout()
+        toLogin()
+    }, [])
 
     return <></>
 }
