@@ -6,6 +6,7 @@ import { Contractor } from 'api'
 import './Contractors.css'
 import { useQueryClient } from '@tanstack/react-query'
 import useUser from '../../hooks/useUser'
+import { germanDate } from '../../utils/date'
 
 const ContractorsList = () => {
     const { project } = useContext(ProjectContext)
@@ -31,22 +32,29 @@ const ContractorsList = () => {
 
     if(!contractors?.length) return <p>Noch keine Gewerke</p>
 
-    const contractorsList = contractors.map(contractor => {
-
-        const { id, name, start, end } = contractor;
-        return (
-            <div className="contractor-row" key={id}>
-                <span className="contractor-name">{name}</span>
-                <span>{ start.toDateString() } - { end.toDateString() }</span>
-                <span className="contractor-delete" onClick={deleteContractor(id)}>Löschen</span>
-            </div>
-        )
-    })
+    const contractorsList = contractors
+        .sort((a, b) => ((a.start < b.start) ? -1 : 0))
+        .map(contractor => {
+            const { id, name, start, end } = contractor
+            return (
+                <tr className="contractor-row" key={id}>
+                    <td className="contractor-name">{name}</td>
+                    <td>{ germanDate(start) }</td>
+                    <td>{ germanDate(end) }</td>
+                    <td className="contractor-delete" onClick={deleteContractor(id)}>Löschen</td>
+                </tr>
+            )
+        })
 
     return (
-        <div>
-            { contractorsList }
-        </div>
+        <table>
+            <thead>
+                <th>Name</th><th>Email</th><th>Beginn</th><th>Ende</th><th></th>
+            </thead>
+            <tbody>
+                { contractorsList }
+            </tbody>
+        </table>
     )
 }
 
