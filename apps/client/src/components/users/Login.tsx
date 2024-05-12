@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import useUser from '../../hooks/useUser.ts'
 import { Link } from 'react-router-dom'
+import useNav from '../../hooks/useNav'
 
 const Login = () => {
 
@@ -14,7 +15,7 @@ const Login = () => {
 
 const LoginForm = () => {
     const { login } = useUser()
-    const navigate = useNavigate()
+    const { navigate } = useNav()
 
     const [ params ] = useSearchParams()
     const from = params.get('from') || '/'

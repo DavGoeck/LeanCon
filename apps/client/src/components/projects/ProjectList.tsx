@@ -1,15 +1,15 @@
 import useProject from '../../hooks/useProject'
 import { useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
 import useUser from '../../hooks/useUser.ts'
 
 import { Project } from 'api'
 import API from '../../api-client'
 
 import './Projects.css'
+import useNav from '../../hooks/useNav'
 
 const ProjectList = () => {
-    const navigate = useNavigate()
+    const { navigate } = useNav()
     const { bearer } = useUser()
     const { setProject } = useProject()
 

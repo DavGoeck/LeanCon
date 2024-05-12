@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import API from '../../api-client.ts'
+import useNav from '../../hooks/useNav'
 
 const Registration = () => {
-    const navigate = useNavigate()
+    const { navigate } = useNav()
 
     const [ firstName, setFirstName ] = useState('')
     const [ lastName, setLastName ] = useState('')
