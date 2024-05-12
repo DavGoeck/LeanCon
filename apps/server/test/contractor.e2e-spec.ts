@@ -25,17 +25,41 @@ describe('App e2e', () => {
 
   describe('Contractors', () => {
 
-    let contractorId: string
+    let contractorIds: string[] = []
 
     it('should create contractor', async () => {
 
-        const contractor = contractorData(projectId)
+      const contractor = contractorData(projectId)
 
-        contractorId = await pactum.spec()
-            .post('contractors')
-            .withBody(contractor)
-            .expectStatus(201)
-            .returns('id')
+      const contractorId = await pactum.spec()
+        .post('contractors')
+        .withBody(contractor)
+        .expectStatus(201)
+        .returns('id')
+
+      contractorIds.push(contractorId)
+    })
+
+    it('should create with correct email only', async () => {
+      let contractor = contractorData(projectId, 'test@mail')
+
+      await pactum.spec()
+        .post('contractors')
+        .withBody(contractor)
+        .expectStatus(400)
+
+      contractor = contractorData(projectId, 'test@mail.com')
+
+      contractorIds.push(
+        await pactum.spec()
+          .post('contractors')
+          .withBody(contractor)
+          .expectStatus(201)
+          .expectJsonLike({
+
+          })
+          .returns('id')
+      )
     })
 
     it('should get contractor', async () => {
@@ -43,7 +67,7 @@ describe('App e2e', () => {
         await pactum.spec().get('contractors')
             .withQueryParams({ projectId })
             .expectStatus(200)
-            .expectJsonLength(1)
+            .expectJsonLength(2)
     })
 
     it('should not get contractor in different project', async () => {
@@ -55,9 +79,14 @@ describe('App e2e', () => {
     })
 
     it('should delete contractor', async () => {
+        const [ id1, id2 ] = contractorIds
         await pactum.spec()
-            .delete(`contractors/${contractorId}`)
-            .expectStatus(204)
+          .delete(`contractors/${id1}`)
+          .expectStatus(204)
+
+        await pactum.spec()
+          .delete(`contractors/${id2}`)
+          .expectStatus(204)
 
         await pactum.spec()
             .get('contractors')

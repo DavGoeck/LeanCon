@@ -27,14 +27,16 @@ export const randomUserInfo = () => {
     }
 }
 
-export const contractorData = (projectId: string) : Partial<Contractor> => {
+export const contractorData = (projectId: string, email:string = 'test@mail.com') : Partial<Contractor> => {
     const date = new Date()
-    return {
+    const data: Partial<Contractor> = {
         name: 'Test Gewerk',
         start: date,
         end: date,
         projectId
     }
+    if (email) data.email = email
+    return data
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"

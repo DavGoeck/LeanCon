@@ -31,10 +31,13 @@ export const ProjectSchema = z.object({
 export const ContractorSchema = z.object({
     id: z.string(),
     name: z.string(),
+    email: z.string().email(),
     projectId: z.string(),
     start: z.coerce.date(),
     end: z.coerce.date()
 })
+
+export const ContractorCreationSchema = ContractorSchema.omit({ id: true })
 
 export const CredentialsSchema = z.object({
     username: z.string(),
@@ -58,6 +61,7 @@ export type UserRegistration = z.infer<typeof UserRegistrationSchema>
 export type User = z.infer<typeof UserSchema>
 export type Project = z.infer<typeof ProjectSchema>
 export type Contractor = z.infer<typeof ContractorSchema>
+export type ContractorCreation = z.infer<typeof ContractorCreationSchema>
 export type Credentials = z.infer<typeof CredentialsSchema>
 export type Jwt = z.infer<typeof JwtSchema>
 
@@ -138,7 +142,7 @@ export const apiContract = c.router(
             create: {
                 method: 'POST',
                 path: '/contractors',
-                body: ContractorSchema.omit({ id: true }),
+                body: ContractorCreationSchema,
                 headers: BearerSchema,
                 responses: {
                     201: ContractorSchema

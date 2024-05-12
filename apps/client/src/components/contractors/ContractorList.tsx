@@ -29,16 +29,17 @@ const ContractorsList = () => {
     )
 
     const contractors: Contractor[] = data?.body || []
-
+    
     if(!contractors?.length) return <p>Noch keine Gewerke</p>
 
     const contractorsList = contractors
         .sort((a, b) => ((a.start < b.start) ? -1 : 0))
         .map(contractor => {
-            const { id, name, start, end } = contractor
+            const { id, name, email, start, end } = contractor
             return (
                 <tr className="contractor-row" key={id}>
                     <td className="contractor-name">{name}</td>
+                    <td className="contractor-email">{email}</td>
                     <td>{ germanDate(start) }</td>
                     <td>{ germanDate(end) }</td>
                     <td className="contractor-delete" onClick={deleteContractor(id)}>Löschen</td>

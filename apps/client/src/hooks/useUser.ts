@@ -3,7 +3,7 @@ import TokenContext from '../context/TokenContext.tsx'
 import { Credentials, UserSchema } from 'api'
 import API from '../api-client.ts'
 import useCookies, { Cookies } from './useCookies'
-import { parseJwt } from '../utils/jwtUtils'
+import { parseJwt } from '../utils/jwt.ts'
 import useNav from './useNav'
 
 const useUser = () => {

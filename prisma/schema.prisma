@@ -55,6 +55,7 @@ model Contractor {
 
 
   name String
+  email String @default("")
   start DateTime?
   end DateTime?
 

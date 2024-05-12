@@ -1,11 +1,12 @@
 import { useContext, useState } from 'react'
 import API from '../../api-client'
-import { useQueryClient } from '@tanstack/react-query'
 import { redirect } from 'react-router-dom'
 import ProjectContext from '../../context/ProjectContext'
 import { currentDate, IntervalPicker } from '../helpers/Date'
 import useUser from '../../hooks/useUser'
 import useNav from '../../hooks/useNav'
+import { ContractorCreation } from 'api'
+import { httpHandler } from '../../utils/http'
 
 const ContractorCreator = () => {
     const { project } = useContext(ProjectContext)
@@ -16,18 +17,17 @@ const ContractorCreator = () => {
         redirect('/')
         return <></>
     }
-    const queryClient = useQueryClient()
-
-    const { mutate: creation } = API.contractors.create.useMutation({
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['contractors', project.id] })
-        }
-    })
 
     const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [ emailError, setEmailError ] = useState(false)
 
     const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
+    }
+    const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
+        setEmail(e.currentTarget.value)
+        if(emailError) setEmailError(false)
     }
 
     const date = currentDate()
@@ -40,30 +40,39 @@ const ContractorCreator = () => {
         setEndDate(end)
     }
 
-    const createContractor = () => {
+    const createContractor = async () => {
         if ( !startDate || !endDate ) return
-        creation({ 
-            body: { name, projectId: project.id, start: startDate, end: endDate } ,
+        const body: ContractorCreation = { name, email, projectId: project.id, start: startDate, end: endDate }
+        const response = await API.contractors.create.mutation({
+            body,
             headers: { authorization: bearer }
         })
-        navInProject('gewerke')
+        httpHandler(response, {
+            201: () => navInProject('gewerke'),
+            400: () => { setEmailError(true) },
+            default: (r) => { console.log(r) }
+        })
     }
 
-    const onSubmit: React.FormEventHandler<HTMLFormElement> = 
-        async (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault()
-            createContractor()
-            setName('')
-        }
+    const submit = async (e: React.MouseEvent) => {
+        e.preventDefault()
+        createContractor()
+    }
 
     return (
         <div>
             <h2>Neues Gewerk</h2>
-            <form onSubmit={onSubmit}>
-                <input name='title' value={name} onChange={handleNameChange}/><br/>
-                <IntervalPicker start={startDate} end={endDate} onChange={handleIntervalChange}/><br/>
-                <button>Erstellen</button>
-            </form>
+            <div>
+                <label htmlFor='nameInput'>Name</label><br/>
+                <input id='nameInput' value={name} onChange={handleNameChange}/><br/><br/>
+                <label htmlFor='emailInput'>Email</label><br/>
+                <input id='emailInput' value={email} onChange={handleEmailChange}/>
+                { emailError && <><br/><span className='input-error'>Fehler in Email</span></> }
+                <br/><br/>
+
+                <IntervalPicker start={startDate} end={endDate} onChange={handleIntervalChange}/><br/><br/>
+                <button onClick={submit}>Erstellen</button>
+            </div>
         </div>
     )
 }

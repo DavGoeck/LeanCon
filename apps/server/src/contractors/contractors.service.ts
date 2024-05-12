@@ -8,12 +8,15 @@ export class ContractorsService {
     constructor(private prisma: PersistenceService) {}
 
     async getAll(projectId): Promise<Contractor[]> {
-        return await this.prisma.contractor.findMany({ where: { projectId }})
+        const contractors = await this.prisma.contractor.findMany({ where: { projectId }})
+        return contractors.map(contractor => { if (contractor.email === null) { delete contractor.email }; return contractor })
     }
 
     async create(body): Promise<Contractor> {
-        const contractor = { ...body, id: v4() }
-        return await this.prisma.contractor.create({ data: contractor })
+        const contractorInfo = { ...body, id: v4() }
+        const contractor = await this.prisma.contractor.create({ data: contractorInfo })
+        if (contractor.email === null) delete contractor.email
+        return contractor
     }
 
     async remove(id): Promise<Object> {
