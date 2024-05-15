@@ -11,13 +11,20 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-    - run: echo 'Auf gehts!'
-    - uses: actions/checkout@v4
+    
+    - name: Let's go!
+      run: echo 'Auf gehts!'
+    
+    - name: Get Code
+      uses: actions/checkout@v4
+
     - name: Setup Node.js environment
       uses: actions/setup-node@v4.0.2
       with:
         node-version: 20
-    - run: |
+
+    - name: build and restart
+      run: |
         npm i -D turbo
         npm i --workspace server @nestjs/serve-static @nestjs/config
         echo "DATABASE_URL=\"$DATABASE_URL\"" > .env
