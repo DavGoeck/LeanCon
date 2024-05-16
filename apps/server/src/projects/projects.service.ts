@@ -4,6 +4,7 @@ import { PersistenceService } from '../persistence/persistence.service'
 
 import { Project } from '@prisma/client'
 import { toSlug } from '../utils/strings'
+import { MailService } from '../mail/mail.service'
 
 @Injectable()
 export class ProjectsService {
@@ -32,6 +33,11 @@ export class ProjectsService {
     } catch (e) {
       return null
     }
+  }
+
+  async start(id): Promise<Project> {
+    const data = { published: new Date }
+    return this.update(id, data)
   }
 
   async remove(id: string) {

@@ -6,6 +6,8 @@ on:
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  MAIL_API_USER: ${{ secrets.MAIL_API_USER }}
+  MAIL_API_PASS: ${{ secrets.MAIL_API_PASS }}
 
 jobs:
   deploy:
@@ -29,6 +31,8 @@ jobs:
         npm i --workspace server @nestjs/serve-static @nestjs/config
         echo "DATABASE_URL=\"$DATABASE_URL\"" > .env
         echo "JWT_SECRET=\"$JWT_SECRET\"" >> .env
+        echo "MAIL_API_USER=\"$MAIL_API_USER\"" >> .env
+        echo "MAIL_API_PASS=\"$MAIL_API_PASS\"" >> .env
         npm run build:prod
         npm run db:prod:update
         pm2 stop lean-con

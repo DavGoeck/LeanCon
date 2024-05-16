@@ -107,7 +107,20 @@ export const apiContract = c.router(
                     id: z.string()
                 }),
                 headers: BearerSchema,
-                body: ProjectSchema.omit({ id: true }).partial(),
+                body: ProjectSchema.omit({ id: true, published: true }).partial(),
+                responses: {
+                    200: ProjectSchema,
+                    404: ErrorSchema
+                }
+            },
+            start: {
+                method: 'PATCH',
+                path: '/projects/:id/start',
+                pathParams: z.object({
+                    id: z.string()
+                }),
+                headers: BearerSchema,
+                body: z.any(),
                 responses: {
                     200: ProjectSchema,
                     404: ErrorSchema

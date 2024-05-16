@@ -9,9 +9,9 @@ const ProjectDetails = () => {
 
     const publishProject = async () => {
         if (project) {
-            const response = await API.projects.update.mutation({ 
+            const response = await API.projects.start.mutation({ 
                 params: { id: project.id },
-                body: { published: new Date() },
+                body: {},
                 headers: { authorization: bearer }
             })
             if (response.status === 200) {

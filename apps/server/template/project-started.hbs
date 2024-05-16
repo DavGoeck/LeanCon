@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Bauprojekt gestartet!</title>
+        <style>
+            .body {
+                background-color: #f6f6f6;
+                width: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Projekt "{{ title }}" gestartet</h1>
+        <p>Sie sind als Gewerk in das Projekt "{{ title }}" eingebunden.</p>
+        <p>Ihr Einsatz ist im Zeitraum vom {{ start }} bis {{ end }} angesetzt.</p>
+        <br/>
+        <p>
+            Sie können Ihre Projektteilnahme unter folgendem Link bestätigen:
+            <a href="{{ baseUrl }}/gewerk?token={{ token }}">Akzeptieren</a>
+        </p>
+        <p>Sollte Ihnen dieser Termin nicht passen, dann können </p>
+    </body>
+</html>

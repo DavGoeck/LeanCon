@@ -28,6 +28,10 @@ export class ProjectsController {
         const project = await this.projectsService.update(id, body)
         return project ? ok(project) : notFound({ message: 'Project not found.' })
       },
+      start: async ({ params: { id } }) => {
+        const project = await this.projectsService.start(id)
+        return project ? ok(project) : notFound({ message: 'Project not found.' })
+      },
       remove: async ({ params: { id }}) => {
         const project = await this.projectsService.remove(id)
         return project ? noContent() : notFound({ message: 'Project not found!' })
