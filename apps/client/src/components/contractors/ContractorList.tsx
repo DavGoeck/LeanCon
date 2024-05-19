@@ -50,7 +50,13 @@ const ContractorsList = () => {
     return (
         <table>
             <thead>
-                <th>Name</th><th>Email</th><th>Beginn</th><th>Ende</th><th></th>
+                <tr className="contractor-row">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Beginn</th>
+                    <th>Ende</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
                 { contractorsList }
