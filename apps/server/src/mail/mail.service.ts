@@ -43,7 +43,7 @@ export class MailService {
 
     projectMailInfo = (project: Project, contractor: Contractor) => {
         const { title } = project
-        const { email, start, end } = contractor
+        const { email, start, end, token } = contractor
 
         return {
             to: email,
@@ -51,10 +51,10 @@ export class MailService {
             template: 'project-started',
             context: {
                 title,
+                token,
                 start: germanDate(start),
                 end: germanDate(end),
                 baseUrl: 'https://leancon.goeckede.software',
-                token: 'myToken'
             }
         }
     }

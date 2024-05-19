@@ -16,6 +16,7 @@ import UserForm from './components/users/UserForm.tsx';
 import Project from './components/projects/Project.tsx';
 import ProjectModifier from './components/projects/ProjectModifier';
 import ProjectDetails from './components/projects/ProjectDetails';
+import ContractorSelfservice from './components/contractors/ContractorSelfservice';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
             ]
           }
         ]
+      },
+      {
+        path: 'gewerk',
+        element: <ContractorSelfservice />
       },
       {
         path: 'nutzer',

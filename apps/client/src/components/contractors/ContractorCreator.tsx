@@ -34,7 +34,7 @@ const ContractorCreator = () => {
     const [startDate, setStartDate] = useState<Date|null>(date)
     const [endDate, setEndDate] = useState<Date|null>(date)
 
-    const handleIntervalChange = (dates: [Date | null, Date | null]) => {
+    const handleIntervalChange = (dates: [Date, Date]) => {
         const [ start, end ] = dates
         setStartDate(start),
         setEndDate(end)

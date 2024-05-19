@@ -31,13 +31,14 @@ export const ProjectSchema = z.object({
 export const ContractorSchema = z.object({
     id: z.string(),
     name: z.string(),
+    token: z.string(),
     email: z.string().email(),
     projectId: z.string(),
     start: z.coerce.date(),
     end: z.coerce.date()
 })
 
-export const ContractorCreationSchema = ContractorSchema.omit({ id: true })
+export const ContractorCreationSchema = ContractorSchema.omit({ id: true, token: true })
 
 export const CredentialsSchema = z.object({
     username: z.string(),
@@ -169,6 +170,31 @@ export const apiContract = c.router(
                 responses: {
                     204: z.object({}),
                     404: z.object({})
+                }
+            }
+        },
+        contractor: {
+            getSelf: {
+                method: 'GET',
+                path: '/contractor/self',
+                query: z.object({
+                    token: z.string()
+                }),
+                responses: {
+                    200: ContractorSchema,
+                    404: ErrorSchema
+                }
+            },
+            updateSelf: {
+                method: 'PATCH',
+                path: '/contractor/self',
+                query: z.object({
+                    token: z.string()
+                }),
+                body: ContractorSchema.omit({ id: true, email: true }).partial(),
+                responses: {
+                    200: ContractorSchema,
+                    404: ErrorSchema
                 }
             }
         },
