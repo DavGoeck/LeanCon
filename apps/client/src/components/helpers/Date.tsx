@@ -14,7 +14,7 @@ type DatePickerProps = {
 type IntervalPickerProps = {
     start: Date | null,
     end: Date | null,
-    onChange: (dates: [Date | null, Date | null]) => void,
+    onChange: (dates: [Date, Date]) => void,
     allowPast?: boolean
 }
 
