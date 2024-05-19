@@ -59,6 +59,8 @@ model Contractor {
   start DateTime?
   end DateTime?
 
+  token String? @unique
+
   projectId String
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid'
 import { PersistenceService } from '../persistence/persistence.service';
 import { Contractor } from '@prisma/client';
+import { generateToken } from '../utils/random';
 
 @Injectable()
 export class ContractorsService {
@@ -13,7 +14,7 @@ export class ContractorsService {
     }
 
     async create(body): Promise<Contractor> {
-        const contractorInfo = { ...body, id: v4() }
+        const contractorInfo = { ...body, id: v4(), token: generateToken(10) }
         const contractor = await this.prisma.contractor.create({ data: contractorInfo })
         if (contractor.email === null) delete contractor.email
         return contractor
@@ -21,6 +22,16 @@ export class ContractorsService {
 
     async remove(id): Promise<Object> {
         return await this.prisma.contractor.delete({ where: { id }})
+    }
+
+    async getByToken(token): Promise<Contractor> {
+        const contractor = await this.prisma.contractor.findFirst({ where: { token } })
+        return contractor
+    }
+
+    async updateByToken(token, body): Promise<Contractor> {
+        const contractor = await this.prisma.contractor.update({ where: { token }, data: body })
+        return contractor
     }
 
 }
