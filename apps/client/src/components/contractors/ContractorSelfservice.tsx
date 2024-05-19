@@ -13,7 +13,7 @@ const ContractorSelfservice = () => {
     const { data } = API.contractor.getSelf.useQuery(['contractor', token], { query: { token: (token || "") } })
     const contractor = data?.body || null
     
-    if (!contractor || !token) {
+    if (!contractor) {
         return <p>Zum gegebenen Code konnte kein Gewerk ausgemacht werden!</p>
     }
 
