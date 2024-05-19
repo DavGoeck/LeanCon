@@ -31,11 +31,11 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         from: '"LeanCon Email Dienst" <service@leancon.de>',
       },
       template: {
-        dir: process.cwd() + '/template/',
+        dir: join(__dirname, '..', 'template'),
         adapter: new HandlebarsAdapter(),
         options: {
-          strict: true,
-        },
+          strict: true
+        }
       },
     }),
     ServeStaticModule.forRoot({
