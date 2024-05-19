@@ -47,7 +47,7 @@ export class MailService {
 
         return {
             to: email,
-            subject: `Projekt "${title}" ist gestartet!`,
+            subject: `Projekt ${title} wurde gestartet!`,
             template: 'project-started',
             context: {
                 title,
