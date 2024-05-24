@@ -14,6 +14,13 @@
     cursor: pointer;
 }
 
+.contractor-row .contractor-edit {
+    background-color: lightblue;
+    padding: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
 .headline {
     display: flex;
     align-items: center;

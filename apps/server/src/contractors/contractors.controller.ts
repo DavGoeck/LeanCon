@@ -17,6 +17,14 @@ export class ContractorsController {
         const contractors = await this.contractorsService.getAll(projectId)
         return ok(contractors)
       },
+      getOne: async ({ params: { id} }) => {
+        const contractor = await this.contractorsService.getOne(id)
+        return contractor ? ok(contractor) : notFound({ message: 'Contractor not found' })
+      },
+      update: async ({ params: { id }, body }) => {
+        const contractor = await this.contractorsService.updateById(id, body)
+        return contractor ? ok(contractor) : notFound({ message: 'Contractor not found' })
+      },
       create: async ({ body }) => {
         const contractor = await this.contractorsService.create(body)
         return created(contractor)

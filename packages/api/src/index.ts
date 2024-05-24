@@ -39,6 +39,7 @@ export const ContractorSchema = z.object({
 })
 
 export const ContractorCreationSchema = ContractorSchema.omit({ id: true, token: true })
+export const ContractorUpdateSchema = ContractorCreationSchema.omit({ projectId: true })
 
 export const CredentialsSchema = z.object({
     username: z.string(),
@@ -63,6 +64,7 @@ export type User = z.infer<typeof UserSchema>
 export type Project = z.infer<typeof ProjectSchema>
 export type Contractor = z.infer<typeof ContractorSchema>
 export type ContractorCreation = z.infer<typeof ContractorCreationSchema>
+export type ContractorUpdate = z.infer<typeof ContractorUpdateSchema>
 export type Credentials = z.infer<typeof CredentialsSchema>
 export type Jwt = z.infer<typeof JwtSchema>
 
@@ -151,6 +153,31 @@ export const apiContract = c.router(
                 headers: BearerSchema,
                 responses: {
                     200: ContractorSchema.array()
+                }
+            },
+            getOne: {
+                method: 'GET',
+                path: '/contractors/:id',
+                pathParams: z.object({
+                    id: z.string()
+                }),
+                headers: BearerSchema,
+                responses: {
+                    200: ContractorSchema,
+                    404: ErrorSchema
+                }
+            },
+            update: {
+                method: 'PATCH',
+                path: '/contractors/:id',
+                pathParams: z.object({
+                    id: z.string()
+                }),
+                headers: BearerSchema,
+                body: ContractorUpdateSchema.partial(),
+                responses: {
+                    200: ContractorSchema,
+                    404: ErrorSchema
                 }
             },
             create: {

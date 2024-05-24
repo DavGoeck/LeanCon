@@ -17,6 +17,7 @@ import Project from './components/projects/Project.tsx';
 import ProjectModifier from './components/projects/ProjectModifier';
 import ProjectDetails from './components/projects/ProjectDetails';
 import ContractorSelfservice from './components/contractors/ContractorSelfservice';
+import ContractorEditor from "./components/contractors/ContractorEditor.tsx";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
               {
                 path: 'gewerke/neu',
                 element: <ContractorCreator />
+              },
+              {
+                path: 'gewerke/edit/:id',
+                element: <ContractorEditor />
               }
             ]
           }
