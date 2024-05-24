@@ -2,3 +2,4 @@ node_modules/
 .turbo/
 packages/api/dist/
 .env
+.idea/
