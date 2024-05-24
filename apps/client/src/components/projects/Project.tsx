@@ -16,8 +16,6 @@ const Project = () => {
 
     useEffect(() => {
         const getProject = async () => {
-            if (project) return
-
             if (bearer) {
                 if (slug) {
                     const response = await API.projects.getAll.query({ query: { slug }, headers: { authorization: bearer } })
@@ -34,17 +32,15 @@ const Project = () => {
         getProject()
     }, [project, slug, bearer])
 
-    if (project) {
-        return (
-            <div id="project">
-                <div className="project-headline">{ project.title }</div>
-                <div className="project-info">
-                    <Outlet />
-                </div>
+    if (!project) return <></>
+    return (
+        <div id="project">
+            <div className="project-headline">{ project.title }</div>
+            <div className="project-info">
+                <Outlet />
             </div>
-        )
-    }
-    return <></>
+        </div>
+    )
 }
 
 export default Project

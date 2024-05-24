@@ -1,15 +1,13 @@
 import { useState } from 'react'
-import useProject from '../../hooks/useProject'
 import API from '../../api-client'
 import useUser from '../../hooks/useUser'
 import useNav from '../../hooks/useNav'
+import useCurrentProject from "../../hooks/useCurrentProject.ts";
 
 const ProjectModifier = () => {
-    const { project, setProject } = useProject()
+    const { project } = useCurrentProject()
     const { navigate } = useNav()
     const { bearer } = useUser()
-
-    if (!project) return <></>
 
     const [ title, setTitle ] = useState(project.title)
 
@@ -28,8 +26,6 @@ const ProjectModifier = () => {
 
         if (response.status === 200) {
             const updatedProject = response.body
-    
-            setProject(updatedProject)
             navigate(`/p/${updatedProject.slug}`)
         } else {
             navigate(`/p/${project.id}`)

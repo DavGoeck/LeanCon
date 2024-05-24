@@ -1,4 +1,3 @@
-import useProject from '../../hooks/useProject'
 import { useQueryClient } from '@tanstack/react-query'
 import useUser from '../../hooks/useUser.ts'
 
@@ -11,20 +10,15 @@ import useNav from '../../hooks/useNav'
 const ProjectList = () => {
     const { navigate } = useNav()
     const { bearer } = useUser()
-    const { setProject } = useProject()
-
 
     const { data } = API.projects.getAll.useQuery(['projects', bearer], { headers: { authorization: bearer }})
     const projects = data?.body || []
 
     const queryClient = useQueryClient()
 
-    const selectProject = (project: Project) => {
-        return () => {
-            setProject(project)
-            navigate(`/p/${project.slug}`)
-        }
-    }
+    const selectProject = (project: Project) => (
+        () => navigate(`/p/${project.slug}`)
+    )
 
     const { mutate: deletion } = API.projects.remove.useMutation({
         onSuccess: () => {

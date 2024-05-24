@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import ContractorsList from './ContractorList'
-import useProject from '../../hooks/useProject'
+import useCurrentProject from "../../hooks/useCurrentProject.ts";
 
 const Contractors = () => (
     <div id="contractors">
@@ -10,9 +10,7 @@ const Contractors = () => (
 )
 
 const ContractorsHeadline = () => {
-    const { project } = useProject()
-    const { slug } = project || {}
-
+    const { project: { slug } } = useCurrentProject()
     return (
         <div className="headline">
             <h1>Gewerke</h1> <Link to={`/p/${slug}/gewerke/neu`}>Neues Gewerk</Link>
